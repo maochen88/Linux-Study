@@ -1,0 +1,216 @@
+MariaDB [(none)]> CHANGE MASTER TO MASTER_HOST='192.168.155.12',MASTER_USER='repluser',MASTER_PASSWORD='replpass',MASTER_LOG_FILE='mysql-bin.000004',MASTER_LOG_POS=500;
+
+
+        mysql> GRANT REPLICATION SLAVE，REPLICATION CLIENT ON *.* TO 'slaveUser'@'192.168.98.133' IDENTIFIED BY 'slaveuser' ;        
+
+		
+change master to master_host='192.168.188.33',master_user='repluser',master_password='repluser',master_ssl=1,master_ssl_ca='/usr/local/mysql/ssl/cacert.pem',master_ssl_cert='/usr/local/mysql/ssl/slave1.crt',master_ssl_key='/usr/local/mysql/ssl/slave1.key';
+
+
+MariaDB [(none)]> change master to
+    -> master_host='10.1.51.20',
+    -> master_user='repluser',
+    -> master_password='replpasswd',
+    -> master_log_file='mysql-log.000003',
+    -> master_log_pos='761',
+    -> master_ssl=1,
+    -> master_ssl_ca='/var/lib/mysql/ssl/cacert.pem',
+    -> master_ssl_cert='/var/lib/mysql/ssl/slave.crt',
+    -> master_ssl_key='/var/lib/mysql/ssl/slave.key';
+	
+
+参赛博客编号	参赛博客主题与地址
+0101
+
+Linux进程管理之“四大名捕” 
+http://xinzong.blog.51cto.com/10018904/1755060 
+
+0102
+
+Centos 7&6分布式lamp平台
+
+http://www.178linux.com/15217  
+
+0103	
+Centos 7 DNS配置及理论详解
+
+http://xinzong.blog.51cto.com/10018904/1763604
+
+0104
+
+Linux文件查找工具之find “大宝剑”
+
+http://xinzong.blog.51cto.com/10018904/1749465 
+
+0105	
+Linux系统程序包管理工具-RPM
+
+http://xinzong.blog.51cto.com/10018904/171472
+
+0201
+
+Centos7上利用corosync+pacemaker+crmsh构建高可用集群
+
+http://www.178linux.com/16656
+
+0202	
+编译安装nginx并实现反向代理负载均衡和缓存功能
+
+http://www.178linux.com/16479
+
+0203	
+keepalived实现lvs高可用并负载均衡lamp
+
+http://www.178linux.com/16109
+
+0204	
+debian8下安装配置部署zabbix3.0
+
+http://www.178linux.com/16052
+
+0205	
+OpenSSH的应用和利用OpenSSL创建私有CA签证给httpd服务器开起https
+
+http://www.178linux.com/15072
+
+0206	
+CentOS通过bind配置DNS服务器
+
+http://www.178linux.com/14695
+
+0207	
+CentOS 6的系统启动流程
+
+http://www.178linux.com/14153
+
+0208	
+Centos常用的进程管理和资源查看工具
+
+http://www.178linux.com/14038
+
+0209	Centos的网络配置命令和文件
+http://www.178linux.com/13524 
+
+0301	
+KeepAlived实现HAProxy双主并实现资源的动静分离
+
+http://www.178linux.com/14951
+
+0302	
+LVS+Keepalived并使用DNS轮询实现Director的高可用和负载均衡
+
+http://www.178linux.com/14485
+
+0303	
+学会用各种姿势备份MySQL数据库
+
+http://www.178linux.com/15423
+
+0304	
+虚拟化技术介绍、Xen的简单实现
+
+http://www.178linux.com/17164
+
+0305	分布式系统介绍及MogileFS安装、基本配置
+http://www.178linux.com/15995
+
+0401	
+Zabbix 3.0 监控交换机（2）——ICMP监控及邮件报警
+
+http://tryrus.blog.51cto.com/10914693/1782062
+
+0601	http://strongit.github.io/2016/05/01/zabbix-email/
+0602	
+Zabbix 3.0.2监控预警服务
+
+http://strongit.blog.51cto.com/10020534/1775401
+
+0603	
+mysql5.6源码安装
+
+http://strongit.blog.51cto.com/10020534/1775494
+
+0604	
+mysql主从同步中应注意的问题
+
+http://strongit.blog.51cto.com/10020534/1714008
+
+0605	
+VIM高级操作
+
+http://strongit.blog.51cto.com/10020534/1737269
+
+0606	
+Linux sed 高级用法实例
+
+http://strongit.blog.51cto.com/10020534/1733213
+
+0701	
+Zabbix踩坑之旅 —— B类地址的自动发现
+
+http://pixiuwho.blog.51cto.com/2966916/1784557
+
+0702	
+Zabbix 2.4——trigger详解
+
+http://pixiuwho.blog.51cto.com/2966916/1784517
+
+0703	
+Zabbix 踩坑之旅——zabbix触发重启tomcat
+
+http://pixiuwho.blog.51cto.com/2966916/1764770
+
+0801	
+DNS and BIND 介绍及安装
+
+http://www.178linux.com/16152
+
+0802	
+说说web和http以及lamp/lnmp
+
+http://www.178linux.com/16666
+
+0803	
+LA LN MP
+
+http://www.178linux.com/16723
+
+0804	
+centos6.6下梯子搭建不完全指南
+
+http://www.178linux.com/16654
+
+0805	
+安装LNMP + 搭建WordPress个人博客
+
+http://www.178linux.com/17222
+
+0901	
+DNS架设实验
+
+http://www.178linux.com/14854
+
+0902	
+NFS
+
+http://www.178linux.com/15665
+
+0903	
+FTP服务初探
+
+http://www.178linux.com/15668
+
+0904	
+iptables初探
+
+http://www.178linux.com/17185
+
+0905	
+lvs初探
+
+http://www.178linux.com/17188
+
+1001	
+系统管理中的三大利刃(htop glances dstat)
+
+http://www.178linux.com/9255
