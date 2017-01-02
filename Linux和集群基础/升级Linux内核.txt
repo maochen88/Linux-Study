@@ -1,0 +1,32 @@
+1、配置本地yum源，并安装以下开发工具：
+	# yum grouplist  //查看已经安装的和未安装的软件包组，来判断我们是否安装了相应的开发环境和开发库；
+	# yum groupinstall "Development Tools"  //一般是安装这两个软件包组，这样做会确定你拥有编译时所需的一切工具
+	# yum install ncurses-devel //你必须这样才能让 make *config 这个指令正确地执行
+	# yum install qt-devel //如果你没有 X 环境，这一条可以不用
+	# yum install hmaccalc zlib-devel binutils-devel elfutils-libelf-devel //创建 CentOS-6 内核时需要它们
+2、下载需要升级的内核：
+	$wget https://www.kernel.org/pub/linux/kernel/v3.x/linux-3.10.95.tar.xz  --no-check-certificate
+	$tar xvf linux-3.10.95.tar.xz  -C /usr/src
+	$cd /usr/src/linux-3.10.95
+	$cp /boot/config-2.6.32-220.el6.x86_64 .config #原有的内核配置文件的基础上建立新的编译选项，复制一份到当前目录下
+	$sh -c 'yes "" | make oldconfig' 
+	#make  oldconfig会读取当前目录下的.config文件，在.config文件里没有找到的选项则提示填写。
+3、编译内核文件：
+	$make -j4 bzImage  //生成内核文件
+	$make -j4 modules  //编译模块
+	$make -j4 modules_install  //编译安装模块
+注：-j后面的数字是线程数，用于加快编译速度，一般是逻辑CPU的个数，例如有8核，则为-j8。（modules部分耗时30多分钟）
+	$make install
+	实际运行到这一步时，出现ERROR: modinfo: could not find module vmware_balloon，
+但是不影响内核安装，是由于vsphere需要的模块没有编译，要避免这个问题，需要在make之前时修改.config文件，加入
+	HYPERVISOR_GUEST=y
+	CONFIG_VMWARE_BALLOON=m
+4、修改grub引导，重启：
+	一般将grub.config中default=0，或查看开机引导时，新编译的内核处在第N个位置，则default=N-1
+5. 异常
+	编译失败（如缺少依赖包）
+	可以先清除，再重新编译：
+	$ make mrproper         #完成或者安装过程出错，可以清理上次编译的现场
+	$ make clean
+
+	

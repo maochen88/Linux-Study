@@ -1,0 +1,56 @@
+Docker的安装：
+Docker 运行在CentOS 7 上，要求系统为64位、系统内核版本为 3.10 以上。
+Docker 运行在CentOS-6.5+要求系统为64位、系统内核版本为 2.6.32-431 或者更高版本。
+uname -r #查看内核版本
+docker在6.8版本上的安装：
+cat  >> docker.sh << EOF
+#!/bin/bash
+rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-6
+
+yum install -y yum-priorities
+yum install -y docker-io
+EOF
+sh docker.sh 或者--->
+$ sudo yum install http://mirrors.yun-idc.com/epel/6/i386/epel-release-6-8.noarch.rpm
+$ sudo yum install docker-io
+docker在7版本上的安装：
+1、使用脚本自动安装：(阿里云的安装脚本)
+curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh -
+2、手动安装
+添加内核参数
+默认配置下，在 CentOS 使用 Docker 可能会碰到下面的这些警告信息：
+WARNING: bridge-nf-call-iptables is disabled
+WARNING: bridge-nf-call-ip6tables is disabled
+添加内核配置参数以启用这些功能。
+$ sudo tee -a /etc/sysctl.conf <<-EOF
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+然后重新加载 sysctl.conf 即可
+$ sudo sysctl -p
+添加 yum 源
+虽然 CentOS 软件源 Extras 中有 Docker，名为 docker，但是不建议使用系统源中的这个版本，它的版本相对比较陈旧，而且并非 Docker 官方维护的版本。因此，我们需要使用 Docker 官方提供的 CentOS 软件源。
+执行下面的命令添加 yum 软件源。
+$ sudo tee /etc/yum.repos.d/docker.repo <<-'EOF'
+[dockerrepo]
+name=Docker Repository
+baseurl=https://yum.dockerproject.org/repo/main/centos/7/
+enabled=1
+gpgcheck=1
+gpgkey=https://yum.dockerproject.org/gpg
+EOF
+安装 Docker
+更新 yum 软件源缓存，并安装 docker-engine。
+$ sudo yum update
+$ sudo yum install docker-engine
+启动 Docker 引擎
+$ sudo systemctl enable docker
+$ sudo systemctl start docker
+建立 docker 用户组
+默认情况下，docker 命令会使用 Unix socket 与 Docker 引擎通讯。而只有 root 用户和 docker 组的用户才可以访问 Docker 引擎的 Unix socket。出于安全考虑，一般 Linux 系统上不会直接使用 root 用户。因此，更好地做法是将需要使用 docker 的用户加入 docker 用户组。
+建立 docker 组：
+$ sudo groupadd docker
+将当前用户加入 docker 组：
+$ sudo usermod -aG docker $USER
+

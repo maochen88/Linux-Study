@@ -1,0 +1,47 @@
+yum install dhcp tftp xinetd httpd pykickstart  -y
+yum --nogpgcheck install  cobbler-2.2.2-1.el6.rf.noarch.rpm python-yaml-3.09-3.el6.rf.x86_64.rpm
+service httpd start
+service xinetd start
+service cobblerd  start
+cobbler check
+
+vim /etc/cobbler/settings #配置环境
+
+vim /etc/xinetd.d/rsync    #设置启用同步
+
+openssl passwd -1 -salt 123 123  #设置密码
+vim /etc/cobbler/settings
+主要的 Cobbler 配置文件是 /etc/cobbler/settings。使用文本编辑器打开这个文件，并设置以下选项：
+******************************************
+manage_dhcp：1
+manage_dns：1
+manage_tftpd：1
+restart_dhcp：1
+restart_dns：1
+pxe_just_once：1
+next_server：<服务器的 IP 地址>
+server：<服务器的 IP 地址> 
+******************************************
+vim /etc/dhcp/dhcpd.conf 
+*******************************************
+subnet 192.168.138.0 netmask 255.255.255.0 { 
+	option routers 192.168.138.2; 
+	option domain-name-servers 192.168.138.2; 
+	option subnet-mask 255.255.255.0; 
+	range dynamic-bootp 192.168.138.221 192.168.138.225; 
+	filename "/pxelinux.0"; 
+	default-lease-time 21600; 
+	max-lease-time 43200; 
+	#next-server $next_server; 
+}
+**********************************************
+cobbler sync 
+service cobblerd restart
+service xinetd restart
+
+
+mount /dev/cdrom /mnt
+cobbler import --path=/mnt --name=RedHat-6.4-x86_64
+
+cobbler profile edit --name=RedHat-6.4-x86_64  --distro=RedHat-6.4-x86_64 --kickstart=/var/lib/cobbler/kickstarts/手动生成的安装设置文件名
+

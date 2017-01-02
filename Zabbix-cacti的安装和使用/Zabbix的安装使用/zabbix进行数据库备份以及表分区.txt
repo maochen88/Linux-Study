@@ -1,0 +1,2 @@
+zabbix进行数据库备份以及表分区:
+http://xianglinhu.blog.51cto.com/5787032/1700981

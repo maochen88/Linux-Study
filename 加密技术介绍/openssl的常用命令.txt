@@ -1,0 +1,45 @@
+yum install openssl -y
+rpm -ql openssl
+openssl enc -des3  -salt -a -in inittab -out inittab.des3
+	#将文件inittab采用des3加密算法进行加密，并输出文件名是inittab.des3
+openssl enc -des3 -d -salt -a -in inittab.des3 -out inittab.oring
+	#将用des3加密算法进行加密的文件inittab.des3进行des3反向解密，输出文件名为inittab.out
+sha1sum  FILENAME 或者 openssl dgst -sha1(可加不同的加密算法) FILENAME
+	#获取FILENAME文件的校验码
+openssl passwd -1
+	#对输入的密码进行MD5加密
+openssl rand -base64 NUMBER(随机数的位数)
+	#生成一串NUMBER位的随机数
+
+openssl实现私有CA
+1、生成一对秘钥
+2、生成自签证书
+
+openssl genrsa #生成秘钥，默认生成256位秘钥长度
+openssl genrsa 2048 > key #将生成的2048位的秘钥输出重定向到key文件下
+(umask 077;openssl genrsa -out server.key 1024)
+#括号表示进入一个子进程，生成一个1024位的秘钥保存到server.key，并且文件权限是600
+openssl rsa -in server.key -pubout #输出生成的秘钥文件的公钥，公钥文件与秘钥匹配
+
+http-ssl自签证书的生成和签署：
+cd /etc/pki/CA
+(umask 077;openssl genrsa -out private/cakey.pem 2048) #建立私有CA生成秘钥
+openssl req -new -x509 -key private/cakey.pem -out cacert.pem -days 3650#CA给自己生成自签证书
+mkdir certs newcerts crl 
+touch  index.txt serial
+echo 01 > serial
+#以上三步是为CA提供所需要的目录及文件(如果事先存在，此步骤可以跳过)
+#以下是在客户端生成证书
+cd /etc/nginx/
+mkdir ssl
+cd ssl
+(umask 077;openssl genrsa -out httpd.key 1024) #客户端用到的秘钥
+openssl req -new -key httpd.key -out httpd.csr -days 365#客户端生成证书签署请求
+scp httpd.csr root@192.168.88.132:/tmp #将客户端的请求发送到签署服务器上
+openssl ca -in /tmp/httpd.csr -out /etc/pki/CA/certs/httpd.crt -days 365#在服务器段签署发送过来的证书
+scp /etc/pki/CA/certs/httpd.crt root@192.168.88.131:/etc/nginx/ssl
+#服务器端将签立的证书发送到客户端
+
+
+openssl req -new -key httpd.key -out httpd.csr #客户端和服务器端为同一个时签署证书的命令方法
+注：在/etc/pki/tls/certs/目录之下有生成样例

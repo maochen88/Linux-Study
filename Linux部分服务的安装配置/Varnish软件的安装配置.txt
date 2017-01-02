@@ -1,0 +1,11 @@
+在varnish官网下载软件包：https://www.varnish-cache.org/releases/index.html#，以下是源码编译安装步骤：
+	yum install readline-devel ncurses-devel
+	tar zxvf /usr/src/varnish-3.0.7.tar.gz -C /usr/src
+	cd /usr/src/varnish-3.0.7
+	./autogen.sh
+	./configure --prefix=/usr/local/varnish PKG_CONFIG_PATH=/usr/lib/pkgconfig
+	make && make install
+RPM包安装方式：
+	yum install epel-release
+	rpm --nosignature -i https://repo.varnish-cache.org/redhat/varnish-4.1.el7.rpm
+	yum install varnish

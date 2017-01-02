@@ -1,0 +1,5 @@
+Login shell£¨Àý£ºsu - git£©£º
+/etc/profile -> /etc/profile.d -> ~/.bash_profile -> ~/.bashrc -> /etc/bashrc
+
+Nologin shell£¨Àý£ºsu git£©:
+~/.bashrc -> /etc/bashrc -> /etc/profile.d

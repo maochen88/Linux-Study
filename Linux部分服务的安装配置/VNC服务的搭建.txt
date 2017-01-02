@@ -1,0 +1,32 @@
+安装VNC Server 端:
+1、yum install  tigervnc-server         //RHEL6： vnc server的包名
+
+2、配置VNC连接密码：
+    vncserver    
+//首次运行时，它会要求输入两次密码,此密码为vncviewer连接登录时的密码.然后,自动在家目录中创建如下文件:
+   1) ~/.vnc/xstartup  	  //当vncviewer连接到VNCServer上后启动X Window的脚本文件.
+   2) ~/.vnc/主机名:1.log //日志文件。
+   3) ~/.vnc/passwd       //这个是密码保存文件。
+   vncserver的参数分两部分,第一个参数是做为client连接的参数":Number",第二个参数Xvnc的启动配置
+参数.
+
+3、vim   ~/.vnc/xstartup
+   #twm  &     //注释掉
+   gnome-session  &         
+//这行的作用就是启动一个gnome桌面会话。具体可安装Xshell+Xmanager后，用Xshell登录,执行该命令,就会启动X Window会话.
+4、vim  /etc/sysconfig/vncserver
+   VNCSERVERS="1:root   2:user1    3:user2   4:user3"      //启动4个VNC连接连接入口,1-4为Client的连接参数.
+#下面为启动VNC服务进程的参数(即Xvnc的启动参数),需要启动几个VNC连接入口,就设定几个,当然也可不设置,因为都有默认值。
+   VNCSERVERARGS[1]="-geometry 800×600     //此为设定屏幕窗口大小(类似与Windows调整分辨率,值都一样) 
+                    -rfbport 5901                  //指定固定端口
+                    -interface 100.1.3.33"         //指定固定监听IP.
+    VNCSERVERARGS[2]="-rfbport 5902 -interface 100.1.3.33"
+    VNCSERVERARGS[3]="-rfbport 5903 -interface 100.1.3.33 -AlwaysShared" //共享屏幕时使用.
+    VNCSERVERARGS[4]="-rfbport 5904 -interface 100.1.3.33 -DisconnectClients" //后连入者会踢掉先连入者.
+             
+5、启动vnc服务：
+   /etc/init.d/vncserver   start
+
+6、常用命令简述:
+  vncserver  -kill  :1      //杀掉第一个VNC接入点。
+  vncserver  -list         //查看当前启动的VNC接入点信息。 

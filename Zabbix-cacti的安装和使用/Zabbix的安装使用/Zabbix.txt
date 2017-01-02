@@ -1,0 +1,47 @@
+sed  -i  "s/fonts.useso.com/fonts.googleapis.com/g"   `grep  -rl "fonts.useso.com"   ./`
+#将当前路径下的所有文件中含有"fonts.useso.com"的字符找出，并且将该字符串替换为"fonts.googleapis.com"
+
+Zabbix的监控流程：
+HostGroup(设备组)-->Host(设备)-->Application(监控项组)-->Items(监控项)-->Triggers(触发器)-->Actions(告警动作)-->Medias(告警方式)-->User Groups(用户组)-->User(用户)
+
+Zabbix修改字体以及乱码的情况：
+原因1，创建mysql搭建web管理的时候，mysql没有使用utf8编码导致。解决办法：
+（1）导出备份数据库sql。然后drop掉该mysql数据库。
+（2）重新创建mysql：  create database zabbix default charset utf8;
+（3） 将备份的sql重新导入。
+鉴于此，一开始配置zabbix站点web的时候我们就直接指定编码utf8，并在数据库的配置文件/etc/my.cnf的[mysqld]下配置如下的文件：
+  symbolic-links=0
+  character-set-server=utf8
+  init-connect='SET NAMES utf8'
+  
+原因2， 电脑字体在zabbix服务器不存在。解决办法：
+（1）C:\Windows\Fonts找到楷体simkai.ttf，或网上下载simkai.ttf，并且 上传到zabbix服务器的/usr/share/zabbix/fonts目录下。
+（2） 切换到zabbix站点目录：mv simkai.ttf graphfont.ttf。问题解决。
+
+去除Zabbix的Administration->Installation按钮的方法：
+vim /usr/share/zabbix/include/menu.inc.php（将如下函数注释掉即可）
+  /*  array(
+                 'url' => 'setup.php',
+                 'label' => _('Installation')
+             )
+  */
+  
+Key介绍：
+key字符允许：所有数字、有大小写字幕、下划线、减号、点.
+key可以有多个参数，他们之间用逗号’,’分开；参数可以是带引号(quoted)的字符串、不带引号(unquoted)的字符串以及数组；如果key参数带引号，那么任何unicode数据都合法，如果参数里面带有双引号，那么要使用”\”来转义；如果kye参数是一个不带引号的字符串，除了逗号和右中括号其他任何unicode字符串都合法；如果key参数是一个数组，那么数组要多加一对中括号，并且数组里面的参数同样要遵循参数规范。
+
+2016年11月23号，昨晚配置了二楼机房的四台主机的zabbix监控，早上发现将被监控主机的终端运行级别调到了runlevel：3，zabbix server无法连接zabbix-agent，查资料发现是因为zabbix-agent监听的IP地址有误，/etc/zabbix/zabbix-agent.conf调整为Server=192.168.188.1,172.16.40.21，其中192.168.188.1是主要监听的地址。
+
+zabbix_get的使用方法举例：
+	zabbix_get -s 192.168.188.11 -p 10050 -k "system.hostname"
+	
+items禁用备注：可以新建一个template，在template中禁用掉所有的不需要的items，然后把同一类的hosts link to到这个Template中，就不用一台一台的更改items
+	
+建议：
+Database：历史数据不要保存太长时间；尽量让数据缓存数据库服务器内存中；
+触发器的表达式：减少使用min(), max(), avg()；尽量使用last(), nodata()；
+数据收集：polling较慢时，减少使用snmp/agentless/agent, 尽量使用trapping方式，即agent(active)；
+数据类型：文本型数据处理速度较慢，尽量少收集类型为text或string或log的数据，多使用numeric型数据；
+	
+Zabbix学习网址：http://lan2003.blog.51cto.com/252098/1221314
+官方文档：https://www.zabbix.com/documentation/3.2/

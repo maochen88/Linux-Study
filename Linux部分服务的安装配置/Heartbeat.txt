@@ -1,0 +1,11 @@
+wget -P /etc/yum.repo.d/ http://mirrors.aliyun.com/repo/epel-6.repo
+yum install net-snmp-libs PyXML gettext-devel libtool-ltdl  libnet -y
+
+rpm -ivh heartbeat-pils-2.1.4-12.el6.x86_64.rpm
+rpm -ivh heartbeat-stonith-2.1.4-12.el6.x86_64.rpm
+rpm -ivh libnet-1.1.5-1.el4.x86_64.rpm
+rpm -ivh heartbeat-2.1.4-12.el6.x86_64.rpm
+rpm -ivh heartbeat-gui-2.1.4-12.el6.x86_64.rpm
+
+rpm  -ql  heartbeat
+配置文件在/etc/ha.cf目录之下：

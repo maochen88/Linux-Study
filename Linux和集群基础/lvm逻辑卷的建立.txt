@@ -1,0 +1,53 @@
+一、LVM的使用
+要创建逻辑卷，要从下向上进行，即先创建PV,然后创建VG,最后创建LV.
+1、pv管理工具
+查看物理卷信息：pvs:简略的显示pv信息
+查看物理卷信息：pvdisplay:详细显示pv信息
+创建物理卷：pvcreate </dev/device> :创建pv设备
+
+2.vg管理工具
+查看卷组：vgs:简略的显示vg信息
+查看卷组：vgdisplay:详细的显示vg信息
+创建卷组：vgcreate -s <size> vg_name physical_device
+扩展卷组：vgextend vg_name physical_device
+删除卷组:vgremove <vg_name>
+
+3.lv管理工具
+查看逻辑卷：lvs:简略的显示lv信息
+查看逻辑卷：lvdisplay:详细的显示lv信息
+创建逻辑卷：lvcreate -L <size> -n <lv_name> vg_name
+扩展逻辑卷：lvextend -L <size> /dev/vg_name/lv_name 
+删除逻辑卷：lvremove /dev/vg_name/lv_name 
+
+4.扩展逻辑卷
+(1)扩展物理边界：lvextend -L <size> /dev/vg_name/lv_name 
+(2)扩展逻辑边界：resize2fs /dev/vg_name/lv_name
+
+5.缩减逻辑卷
+(1)卸载逻辑卷：umount /dev/vg_name/lv_name
+(2)对逻辑卷进行强制检查：ex2fsck -f /dev/vg_name/lv_name
+(3)缩减逻辑边界：resize2fs -L /dev/vg_name/lv_name
+(4)缩减逻辑卷：lvreduce -L /dev/vg_name/lv_name
+(5)挂载：mount /dev/vg_name/lv_name
+注意：扩展逻辑卷时，要先扩展物理边界，才能扩展逻辑边界；缩减逻辑卷时，先减少逻辑边界，才能减少物理边界
+
+二、使用示例
+1、创建一个由至少两个物理卷组成的大小为20G的卷组；要求，PE大小为8M；而在卷组中创建一个大小为5G的逻辑卷mylv1，格式化为ext4文件系统，开机自动挂载至/users目录，支持acl
+(1) pvcreate /dev/sd{b,c}
+(2) vgcreate -s 8M myvg /dev/sd{b,c}
+(3) lvcreate -L 5G -n mylv1 /dev/myvg
+(4) mkfs.ext4 /dev/myvg/mylv1
+(5)编辑/etc/fstab文件，/dev/myvg/mylv1 /user1 ext4 acl 0 0
+
+2、扩展mylv1至9G，确保扩展完成后原有数据完全可用；
+(1)lvextend -L +4G -n /dev/myvg/mylv1
+(2) resize2fs /dev/myvg/mylv1
+
+3、缩减mylv1至7G，确保缩减完成后原有数据完全可用；
+(1) umount /dev/myvg/mylv1
+(2) e2fsck -f /dev/myvg/mylv1
+(3) resize2fs /dev/myvg/mylv1 7G
+(4) lvreduce -L 7G -n /dev/myvg/mylv1
+
+4、对mylv1创建快照，并通过备份数据；要求保留原有的属主属组等信息；
+lvcreate -L 2G -p r -s -n mylv1.bak /dev/myvg/mylv1

@@ -1,0 +1,81 @@
+安装DRBD：
+1、安装依赖的软件包：
+	yum install  flex kernel-devel kernel-headers  -y
+2、解压并安装drbd-8.4.3：
+	tar zxvf drbd-8.4.3.tar.gz -C /usr/src
+	cd /usr/src/drbd-8.4.3
+	./configure --prefix=/usr/local/drbd --sysconf=/etc --with-km
+	make && make insatll
+3、将drbd加载进内核当中：
+	mkdir -p /usr/local/drbd/var/run/drbd
+	chkconfig --add drbd
+	chkconfig drbd on
+	modprobe drbd
+	lsmod | grep drbd (注：查看是否加载进了内核)
+4、简单配置drbd的配置文件：
+	cat /etc/drbd.d/global
+######################################################################
+global {
+	usage-count no;
+}
+
+common {
+	protocol C;
+	handlers {
+		 pri-on-incon-degr "/usr/lib/drbd/notify-pri-on-incon-degr.sh; /usr/lib/drbd/notify-emergency-reboot.sh; echo b > /proc/sysrq-trigger ; reboot -f";
+		 pri-lost-after-sb "/usr/lib/drbd/notify-pri-lost-after-sb.sh; /usr/lib/drbd/notify-emergency-reboot.sh; echo b > /proc/sysrq-trigger ; reboot -f";
+		 local-io-error "/usr/lib/drbd/notify-io-error.sh; /usr/lib/drbd/notify-emergency-shutdown.sh; echo o > /proc/sysrq-trigger ; halt -f";
+	}
+
+	disk {
+		on-io-error detach;
+	}
+
+	net {
+		cram-hmac-alg "sha1";
+		shared-secret	"mydrbdlab";
+	}
+	syncer	{
+		rate	1000M;
+	}
+
+}
+#####################################################################
+/etc/drbd.d/mydrbd.res文件的内容：
+********************************************************************
+resource mydrbd {
+	
+	device /dev/drbd0;
+	disk  /dev/sdb1;
+	meta-disk internal;
+	
+	on node3.maochen.com {
+		address 192.168.138.33:7789;
+	}	
+	on node4.maochen.com {
+		address 192.168.138.44:7789;
+	}
+}
+********************************************************************
+5、启动和配置drbd：
+前提：在两个节点上需要两个对应的相同大小的磁盘分区，比如在node1和node2有两块相同大小的/dev/sdb1未格式化的5G磁盘a(提示：可自动化安装#cat sdb
+											n
+											1
+											1
+											5G
+											w
+											#fdisk /dev/sdb  < sdb)
+	drbdadm	create-md mydrbd
+	service drbd start
+	cat /proc/drbd #查看进度
+	drbdadm primary --force  mydrbd #将当前节点设置为Primary
+	mkfs.ext4 /dev/drbd0
+	mkdir /mydata
+	mount /dev/drbd0 /mydata
+6、关闭drbd服务：
+	在Primary节点上执行以下操作：
+	umount /mydata  #卸载操作
+	drbdadm secondary /dev/drbd0 #降级为Secondary
+	service drbd stop #关闭drbd服务
+至此主从架构的drbd配置完成。
+	

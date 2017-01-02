@@ -1,0 +1,85 @@
+sed(Stream EDitor：流编辑器)
+工作原理：处理时，把当前处理的行存储在临时缓冲区中，称为“模式空间”（pattern space），
+接着用sed命令处理缓冲区中的内容，处理完成后，把缓冲区的内容送往屏幕。
+接着处理下一行，这样不断重复，直到文件末尾。
+
+sed -e	##当只编辑一次时可省略，许多次进行编辑时需添加，多点编辑；
+例：sed '/^#/d' filename  		##删除以"#"开头的行
+	sed -e '/^#/d' -e '/^$/d' 	##删除以"#"开头的并且是空行的行
+	或者如下：
+	sed '/^#/d;/^$/d'			##在引号内部实现，删除以"#"开头的或者空白行
+	
+sed -n	##不全部输出 只打印满足条件的行
+-r		#支持使用扩展正则表达式；
+-i		#直接编辑原文件
+-s 		#替换
+-d 		#删除
+-p 		#打印
+
+sed 's/待替换内容/替换内容/6' filename				##替换掉匹配到的前六个内容
+sed 's/待替换内容/替换内容/g' filename				##替换掉匹配到的所有内容
+sed 's/B.*/&2008/' filename					##在含有B字母的行后添加2008
+sed 's/Bai/&2008/' filename					##在Bai字符之后追加2008
+sed -n '/master/,/slave/p' filename			##输出"master"和"slave"字符之间的所有内容
+
+sed -n 's/root/ROOT/w /root/sh/tx' /etc/passwd		##将文件中的root替换为ROOT并且保存到/root/sh/tx目录中
+sed ’3r /etc/issue'	/etc/passwd						##在/etc/passwd文件的第三行之后追加/etc/issue的内容后输出
+sed '/^UUID/r /etc/issue' /etc/fstab				##在/etc/fstab文件中以UUID开头的行后追加/etc/issue文件的内容
+
+
+sed '1~2d' rc.sysinit 		##删除奇数行的内容
+sed '2~2d' rc.sysinit 		##删除偶数行的内容
+sed -e 's/\(^[[:space:]]\)/#\1/g' rc.sysint			##将以空格开头的所有行前加"#"
+sed -e 's/^#[[:space:]]\+//g'	rc.sysinit			##删除以"#"开头的且其后又多个空格的行
+sed -e '1,3s/\(.*\)/#\1/g'	grub.conf				##在文件的前三行开头添加"#"
+
+sed -n '2,34p'	filename			##打印输出第2到34行
+sed -n '/查找字符/s/需替换的字符/替换字符/p' passwd				##将文件中有root字符的行中的出现在该行第一次的"bash"字符替换为"nologin"
+
+sed -i 's/原内容/新内容/g' filename		##替换字符，用”/”隔开，隔离符可选任意的字符但必须保证前后一致
+sed -i '/原行内容/a要添加的新一行内容' filename		##在当前行的下一行插入内容，a(append追加)
+sed '12a添加的字符'		filename					##在12行后追加内容
+sed '12i添加的字符'		filename					##在12行之前添加内容
+sed -i '325a要添加的新一行内容' 	filename		##在第325行后添加一行内容
+sed -i '/3s/.*/修改的字符/g'	filename 			##将第三行的所有内容替换
+sed -n '3c\xxxxx' filename 							##替换第三行
+var=127.0.0.1   					#定义变量
+sed -i "/^$var.*/替换内容" aaa.txt	#将以$var开头的内容替换掉
+sed -i "/^$var/d"	aaa.txt			#将以$var开头的行删除	
+ls /opt/yum/Packages/|sed -r 's@.*\.(.*)\.rpm$@\1@' |sort |uniq -c	
+##########查找本地rpm包的平台种类以及对应的rpm包个数
+
+\n   新的一行
+\r   回车
+\t   水平制表符
+\v   垂直制表符
+\b   后退符
+
+将模式匹配的正则表达式保存在文件gr中,在命令行中调用：
+$cat gr
+/master/,/slave/p
+$sed -f gr filename			##加入-f参数调用gr文件中的模式，处理filename文件
+
+
+#---------------------------------------------高级用法---------------------------------------#
+sed '1!G;h;$!d' 			##逆序显示文件的内容；
+sed ’$!d' 					##取出最后一行；
+sed '$!N;$!D' 				##取出文件后两行；
+sed '/^$/d;G' 				##删除原有的所有空白行，而后为所有的非空白行后添加一个空白行；
+sed 'n;d' 					##显示奇数行；
+sed 'G' 					##在原有的每行后方添加一个空白行；
+
+'/\.$/d'                 		  删除以句点结尾行
+'-e /abcd/d'                      删除包含a b c d的行
+'s / [ ] [ ] [ ] * / [ ] / g'     删除一个以上空格，用一个空格代替
+'s / ^ [ ] [ ] * / / g'           删除行首空格
+'s / \ . [ ] [ ] * / [ ] / g'     删除句点后跟两个或更多空格，代之以一个空格
+'/ ^ $ / d'                       删除空行
+'s / ^ . / / g'                   删除第一个字符
+'s /COL \ ( . . . \ ) / / g'      删除紧跟COL的后三个字母
+'s / ^ \ / / / g'                 从路径中删除第一个\
+'s / [ ] / [ ] / / g'             删除所有空格并用tab键替代
+'S / ^ [ ] / / g'                 删除行首所有tab键
+'s / [ ] * / / g'                 删除所有tab键
+
+参考链接：http://lq2419.blog.51cto.com/1365130/1238880

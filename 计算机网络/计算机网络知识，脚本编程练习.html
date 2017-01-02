@@ -1,0 +1,1025 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=10,IE=9,IE=8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<title>计算机网络知识，脚本编程_第八周练习 &#8211; linux运维部落</title>
+<script>
+window._deel = {
+    name: 'linux运维部落',
+    url: 'http://www.178linux.com/wp-content/themes/d8-4.0',
+    rss: '',
+    ajaxpager: 'on',
+    maillist: '',
+    maillistCode: '',
+    commenton: 1,
+    roll: [0,0],
+    tougaoContentmin: 200,
+    tougaoContentmax: 5000,
+    appkey: {
+    	tqq: '801494063',
+    	tsina: '1106777879',
+    	t163: '',
+    	tsohu: ''
+    }
+}
+</script>
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.178linux.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4.2"}};
+			!function(a,b,c){function d(a){var c,d=b.createElement("canvas"),e=d.getContext&&d.getContext("2d"),f=String.fromCharCode;return e&&e.fillText?(e.textBaseline="top",e.font="600 32px Arial","flag"===a?(e.fillText(f(55356,56806,55356,56826),0,0),d.toDataURL().length>3e3):"diversity"===a?(e.fillText(f(55356,57221),0,0),c=e.getImageData(16,16,1,1).data.toString(),e.fillText(f(55356,57221,55356,57343),0,0),c!==e.getImageData(16,16,1,1).data.toString()):("simple"===a?e.fillText(f(55357,56835),0,0):e.fillText(f(55356,57135),0,0),0!==e.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8"),diversity:d("diversity")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8&&c.supports.diversity||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='open-sans-css'  href='//fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C600italic%2C300%2C400%2C600&#038;ver=4.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='style-css'  href='http://www.178linux.com/wp-content/themes/d8-4.0/style.css?ver=3.0' type='text/css' media='all' />
+<link rel='stylesheet' id='tablepress-default-css'  href='http://www.178linux.com/wp-content/plugins/tablepress/css/default.min.css?ver=1.7' type='text/css' media='all' />
+<link rel='https://api.w.org/' href='http://www.178linux.com/wp-json/' />
+<link rel='prev' title='第4周作业' href='http://www.178linux.com/64653' />
+<link rel='next' title='第四周作业' href='http://www.178linux.com/64670' />
+<link rel="canonical" href="http://www.178linux.com/64663" />
+<link rel='shortlink' href='http://www.178linux.com/?p=64663' />
+<link rel="alternate" type="application/json+oembed" href="http://www.178linux.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.178linux.com%2F64663" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.178linux.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.178linux.com%2F64663&#038;format=xml" />
+<script type="text/javascript" src="http://www.178linux.com/wp-content/plugins/ueditor/ueditor/third-party/SyntaxHighlighter/shCore.js"></script><link type="text/css" rel="stylesheet" href=" http://www.178linux.com/wp-content/plugins/ueditor/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css" /><meta name="keywords" content="脚本编程, 计算机网络知识, 网络24期">
+<meta name="description" content="Q1：请描述网桥、集线器、二层交换机、三层交换机、路由器的功能、使用场景与区别。网桥：网桥（Bridge）是早期的两端口二层网络设备，用来连接不同网段。网桥的两个端口分别有一条独立的交换信道，不是共享一条背板总线，可隔离冲突域。网桥比集线器（Hub）性能更好，集线器上各端口都是共享同一条背板总线的。后来，网桥被具有更多端口、同时也可隔离冲突域的交换机（Switch）所取代。  集线器：集线器的英文称为“Hub”。“Hub”是“中心”的意">
+<style type="text/css" id="syntaxhighlighteranchor"></style>
+<style>.article-content{font-size: 16px;line-height:27px;}.article-content p{margin:20px 0;}@media (max-width:640px){.article-content{font-size:16px}}.navbar .logo{width:-20px}@media (max-width: 979px){.navbar .logo{width:100%}}</style>
+
+
+<!--[if lt IE 9]><script src="http://www.178linux.com/wp-content/themes/d8-4.0/js/html5.js"></script><![endif]-->
+</head>
+<body class="single single-post postid-64663 single-format-standard"><div class="navbar-wrap">
+<div class="navbar">
+		<div class="logo"><a href="http://www.178linux.com" title="linux运维部落-|国内最专业的Linux运维博客平台">linux运维部落</a></div>
+		<ul class="nav">
+			<li id="menu-item-207" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-207"><a href="http://www.178linux.com/">首页</a></li>
+<li id="menu-item-16455" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-16455"><a href="http://www.178linux.com/more/studentlife">学员风采</a>
+<ul class="sub-menu">
+	<li id="menu-item-26876" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-26876"><a>面授班</a>
+	<ul class="sub-menu">
+		<li id="menu-item-52388" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-52388"><a href="http://www.178linux.com/m21">面授21期</a></li>
+		<li id="menu-item-26867" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-26867"><a href="http://www.178linux.com/m20">面授20期</a></li>
+		<li id="menu-item-26866" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-26866"><a href="http://www.178linux.com/m19">面授19期</a></li>
+		<li id="menu-item-26865" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-26865"><a href="http://www.178linux.com/m18">面授18期</a></li>
+	</ul>
+</li>
+	<li id="menu-item-26877" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-26877"><a>网络班</a>
+	<ul class="sub-menu">
+		<li id="menu-item-59233" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-59233"><a href="http://www.178linux.com/%e7%bd%91%e7%bb%9c26%e6%9c%9f">网络26期</a></li>
+		<li id="menu-item-59232" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-59232"><a href="http://www.178linux.com/%e7%bd%91%e7%bb%9c25%e6%9c%9f">网络25期</a></li>
+		<li id="menu-item-53178" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-53178"><a href="http://www.178linux.com/%e7%bd%91%e7%bb%9c24%e6%9c%9f">网络24期</a></li>
+		<li id="menu-item-45014" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-45014"><a title="网络班23期限" href="http://www.178linux.com/n23">网络23期</a></li>
+		<li id="menu-item-26875" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-26875"><a href="http://www.178linux.com/n22">网络22期</a></li>
+		<li id="menu-item-26874" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-26874"><a href="http://www.178linux.com/n21">网络21期</a></li>
+		<li id="menu-item-26873" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-26873"><a href="http://www.178linux.com/n20">网络20期</a></li>
+		<li id="menu-item-26872" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-26872"><a href="http://www.178linux.com/n19">网络19期</a></li>
+		<li id="menu-item-26871" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-26871"><a href="http://www.178linux.com/n18">网络18期</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li id="menu-item-16454" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-16454"><a href="http://www.osstep.com/">在线课程</a></li>
+<li id="menu-item-16429" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-16429"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f">运维专栏</a>
+<ul class="sub-menu">
+	<li id="menu-item-16430" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-16430"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/devopsadmin">开发运维</a>
+	<ul class="sub-menu">
+		<li id="menu-item-16447" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16447"><a href="http://www.178linux.com/more/devs/java">JAVA</a></li>
+		<li id="menu-item-16448" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16448"><a href="http://www.178linux.com/more/devs/php">PHP</a></li>
+		<li id="menu-item-16449" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16449"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/devopsadmin/django">Django</a></li>
+		<li id="menu-item-16450" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16450"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/devopsadmin/nodejs">nodejs</a></li>
+		<li id="menu-item-16451" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16451"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/devopsadmin/python">Python</a></li>
+		<li id="menu-item-16452" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16452"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/devopsadmin/ruby">RUBY</a></li>
+		<li id="menu-item-16453" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16453"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/devopsadmin/ruby-devopsadmin">ruby</a></li>
+	</ul>
+</li>
+	<li id="menu-item-16431" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16431"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/dbadmin">数据库运维</a></li>
+	<li id="menu-item-16432" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16432"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/monitoradmin">监控运维</a></li>
+	<li id="menu-item-16433" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16433"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin">系统运维</a></li>
+	<li id="menu-item-16434" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16434"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/automatic">自动化</a></li>
+	<li id="menu-item-16435" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16435"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/virtual">虚拟化</a></li>
+	<li id="menu-item-16436" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16436"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/networkadmin">网络运维</a></li>
+</ul>
+</li>
+<li id="menu-item-16444" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16444"><a href="http://www.178linux.com/jobbers">职位推荐</a></li>
+<li id="menu-item-16456" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-16456"><a href="http://www.178linux.com/more">更多</a>
+<ul class="sub-menu">
+	<li id="menu-item-16457" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16457"><a href="http://www.178linux.com/more/ts">师资力量</a></li>
+	<li id="menu-item-29684" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-29684"><a href="http://www.178linux.com/%e8%af%be%e7%a8%8b%e7%bb%83%e4%b9%a0">课程练习</a></li>
+</ul>
+</li>
+		</ul>
+		<div class="menu pull-right">
+			<form method="get" class="dropdown search-form" action="http://www.178linux.com/" >
+				<input class="search-input" name="s" type="text" placeholder="输入关键字搜索" x-webkit-speech=""><input class="btn btn-success search-submit" type="submit" value="搜索">
+				<ul class="dropdown-menu search-suggest"></ul>
+			</form>
+			<div class="btn-group pull-left">
+				<button class="btn btn-primary" data-toggle="modal" data-target="#feed">订阅</button>
+								<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">关注 <i class="caret"></i></button>
+				<ul class="dropdown-menu pull-right">
+										<li><a href="http://weibo.com/mageedu" target="_blank">新浪微博</a></li>														</ul>
+							</div>
+		</div>
+</div>
+</div>
+<header class="header">
+	<div class="speedbar">
+					<div class="pull-right">
+				<i class="icon-user icon12"></i> <a href="http://www.178linux.com/wp-login.php">登录</a>			</div>
+				<div class="toptip"><strong class="text-success">最新消息：</strong>马哥2016Linux运维实战班全新上线，详情可了解  http://www.magedu.com/</div>
+	</div>
+</header>
+<section class="container">
+	<div class="content-wrap">
+	<div class="content">
+		<div class="breadcrumbs">你的位置：<a href="http://www.178linux.com">linux运维部落</a> <small>></small> <a href="http://www.178linux.com/%e7%bd%91%e7%bb%9c24%e6%9c%9f">网络24期</a> <small>></small> <span class="muted">计算机网络知识，脚本编程_第八周练习</span></div>
+				<header class="article-header">
+			<h1 class="article-title"><a href="http://www.178linux.com/64663">计算机网络知识，脚本编程_第八周练习</a></h1>
+			<div class="meta">
+				<span class="muted"><a href="http://www.178linux.com/%e7%bd%91%e7%bb%9c24%e6%9c%9f"><i class="icon-list-alt icon12"></i> 网络24期</a></span>				<span class="muted"><i class="icon-user icon12"></i> <a href="http://www.178linux.com/author/n24_vc">N24_VC</a></span>
+				<time class="muted"><i class="ico icon-time icon12"></i> 3天前</time>
+				<span class="muted"><i class="ico icon-eye-open icon12"></i> 31浏览</span>
+				<span class="muted"><i class="icon-comment icon12"></i> <a href="http://www.178linux.com/64663#respond">0评论</a></span>							</div>
+		</header>
+
+				
+		<article class="article-content">
+			<h2>Q1：请描述网桥、集线器、二层交换机、三层交换机、路由器的功能、使用场景与区别。</h2>
+<pre>网桥：网桥（Bridge）是早期的两端口二层网络设备，用来连接不同网段。网桥的两个端口分别有一条独立的交换信道，不是共享一条背板总线，可隔离冲突域。网桥比集线器（Hub）性能更好，集线器上各端口都是共享同一条背板总线的。后来，网桥被具有更多端口、同时也可隔离冲突域的交换机（Switch）所取代。
+
+集线器：集线器的英文称为“Hub”。“Hub”是“中心”的意思，集线器的主要功能是对接收到的信号进行再生整形放大，以扩大网络的传输距离，同时把所有节点集中在以它为中心的节点上。它工作于OSI(开放系统互联参考模型)参考模型第一层，即“物理层”。集线器与网卡、网线等传输介质一样，属于局域网中的基础设备，采用CSMA/CD（即带冲突检测的载波监听多路访问技术)介质访问控制机制。集线器每个接口简单的收发比特，收到1就转发1，收到0就转发0，不进行碰撞检测。
+
+二层交换机：二层交换机工作于OSI模型的第2层（数据链路层），故而称为二层交换机。二层交换技术的发展已经比较成熟，二层交换机属数据链路层设备，可以识别数据包中的MAC地址信息，根据MAC地址进行转发，并将这些MAC地址与对应的端口记录在自己内部的一个地址表中。
+
+三层交换机：三层交换机就是具有部分路由器功能的交换机，三层交换机的最重要目的是加快大型局域网内部的数据交换，所具有的路由功能也是为这目的服务的，能够做到一次路由，多次转发。对于数据包转发等规律性的过程由硬件高速实现，而像路由信息更新、路由表维护、路由计算、路由确定等功能，由软件实现。三层交换技术就是二层交换技术+三层转发技术。传统交换技术是在OSI网络标准模型第二层——数据链路层进行操作的，而三层交换技术是在网络模型中的第三层实现了数据包的高速转发，既可实现网络路由功能，又可根据不同网络状况做到最优网络性能。
+
+路由器：路由器（Router），是连接因特网中各局域网、广域网的设备，它会根据信道的情况自动选择和设定路由，以最佳路径，按前后顺序发送信号。&nbsp;路由器是互联网络的枢纽，&quot;交通警察&quot;。目前路由器已经广泛应用于各行各业，各种不同档次的产品已成为实现各种骨干网内部连接、骨干网间互联和骨干网与互联网互联互通业务的主力军。路由和交换机之间的主要区别就是交换机发生在OSI参考模型第二层（数据链路层），而路由发生在第三层，即网络层。这一区别决定了路由和交换机在移动信息的过程中需使用不同的控制信息，所以说两者实现各自功能的方式是不同的。</pre>
+<h2>Q2：IP地址的分类有哪些？子网掩码的表示形式及其作用；</h2>
+<h3>IP地址分类</h3>
+<pre>A类IP地址：地址范围0.0.0.0&nbsp;--&nbsp;127.0.0.0，默认子网掩码255.0.0.0
+B类IP地址：地址范围128.0.0.0&nbsp;--&nbsp;191.255.0.0，默认子网掩码255.255.0.0
+C类IP地址：地址范围192.0.0.0&nbsp;--&nbsp;223.255.255.0，默认子网掩码255.255.255.0
+D类是组播地址：地址范围224.0.0.0&nbsp;--&nbsp;239.255.255.255
+E类作为保留研究：地址范围240.0.0.0&nbsp;--&nbsp;255.255.255.255
+保留私网地址：
+A类：10.0.0.0&nbsp;--&nbsp;10.255.255.255
+B类：172.16.0.0&nbsp;--&nbsp;172.31.255.255
+C类：192.168.0.0&nbsp;--&nbsp;192.168.255.255
+特殊地址：
+本地还回地址：127.0.0.1&nbsp;--&nbsp;127.0.0.255
+主机请求无法被分配时候，自己生成的地址：169.254.0.0</pre>
+<h3>子网掩码的表示形式及其作用</h3>
+<pre>子网掩码用二进制方式表示地话，也是一个32位的数字。它对应IP地址网络标识部分的位全部为“1”，对应IP地址主机标识的部分则全部为“0”。由此，一个IP地址可以不再受限于自己的类别，而是可以用这样的子网掩码自由地定位自己的网络标识长度。当然，子网掩码必须是IP地址的首位连续的“1”。对于子网掩码，目前有两种表示方式：一种是用32位数字表示；另一种，则是在每个IP地址后面追加网络地址的位数，用“/”隔开。
+子网掩码作用：用来区分IP地址的网络号与主机号；当TCP/IP网络上的主机相互通信时，就可以利用子网掩码得知这些主机是否在相同的网络区段内；用来将网络分割为多个子网。</pre>
+<h2>Q3：计算机网络的分成模型有哪些（OSI模型和TCP/IP模型），每一层的功能及涉及到的物理设备有哪些。</h2>
+<p><img src="/ueditor/php/upload/image/20161225/1482659436689075.png" title="1482659436689075.png" alt="图片1.png" /></p>
+<h2>Q4：如何将Linux主机接入到TCP/IP网络，请描述详细的步骤。（手动指定的方式）</h2>
+<ul class=" list-paddingleft-2">
+<li>
+<p style="margin-top: 0px;margin-bottom: 9px;padding: 0px">输入命令<code>ifconfig -a</code>查看设备名称；</p>
+</li>
+<li>
+<p style="margin-top: 0px;margin-bottom: 9px;padding: 0px">输入命令<code>ifconfig DEVICENAME IP</code>进行IP地址设定；</p>
+</li>
+<li>
+<p style="margin-top: 0px;margin-bottom: 9px;padding: 0px">输入命令<code>vim /etc/sysconfig/network-script/DEVICENAME</code>修改脚本；</p>
+<pre>BOOTPROTO=static
+ONBOOT=yes
+IPADDR
+NETMASK
+GATEWAY
+DNS1</pre>
+</li>
+<li>
+<p>输入命令<code>systemctl restart network.service</code>进行服务重载；</p>
+</li>
+</ul>
+<h2>Q5：为Linux主机配置网络信息的方式有哪些，请描述各个过程。</h2>
+<pre>临时有效：使用命令ip或者ifconfig进行修改，立即生效；
+永久生效：修改网卡配置脚本文件，需要重启服务或者ifdown/ifup对网卡单独操作；
+使用图形界面setup--网络配置，需要重启服务生效；</pre>
+<h2>Q6：写一个脚本，使用ping命令探测172.16.250.1-172.16.250.254之间的所有主机的在线状态；在线的主机使用绿色显示；不在线的主使用红色显示；</h2>
+<pre>#!/bin/bash
+#
+trap&nbsp;&#039;exit&nbsp;1&#039;&nbsp;INT
+declare&nbsp;-i&nbsp;i=1
+for&nbsp;i&nbsp;in(seq&nbsp;254);do
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;ping&nbsp;172.16.250.$i&nbsp;-c&nbsp;1&nbsp;-W&nbsp;1&nbsp;&amp;&gt;&nbsp;/dev/null;then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;-e&nbsp;&quot;\033[0;32;1m&nbsp;172.16.250.$i&nbsp;is&nbsp;up!&nbsp;\033[0m&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;else
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;-e&nbsp;&quot;\033[0;31;1m&nbsp;172.16.250.$i&nbsp;is&nbsp;down!&nbsp;\033[0m&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;fi
+&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;i++
+done</pre>
+<h2>Q7：详细描述每个网络接口的配置文件中各个参数的含义和其所对应的值；</h2>
+<pre>ifcfg-IFACE配置文件参数：
+&nbsp;&nbsp;&nbsp;&nbsp;DEVICE：此配置文件对应的设备的名称；
+&nbsp;&nbsp;&nbsp;&nbsp;ONBOOT：在系统引导过程中，是否激活此接口；
+&nbsp;&nbsp;&nbsp;&nbsp;UUID：此设备的惟一标识；
+&nbsp;&nbsp;&nbsp;&nbsp;IPV6INIT：是否初始化IPv6；
+&nbsp;&nbsp;&nbsp;&nbsp;BOOTPROTO：激活此接口时使用什么协议来配置接口属性，常用的有dhcp、bootp、static、none；
+&nbsp;&nbsp;&nbsp;&nbsp;TYPE：接口类型，常见的有Ethernet,&nbsp;Bridge；
+&nbsp;&nbsp;&nbsp;&nbsp;DNS1：第一DNS服务器指向；
+&nbsp;&nbsp;&nbsp;&nbsp;DNS2：备用DNS服务器指向；
+&nbsp;&nbsp;&nbsp;&nbsp;DOMAIN：DNS搜索域；
+&nbsp;&nbsp;&nbsp;&nbsp;IPADDR：&nbsp;IP地址；
+&nbsp;&nbsp;&nbsp;&nbsp;NETMASK：子网掩码；CentOS&nbsp;7支持使用PREFIX以长度方式指明子网掩码；
+&nbsp;&nbsp;&nbsp;&nbsp;GATEWAY：默认网关；
+&nbsp;&nbsp;&nbsp;&nbsp;USERCTL：是否允许普通用户控制此设备；
+&nbsp;&nbsp;&nbsp;&nbsp;PEERDNS：如果BOOTPROTO的值为“dhcp”，是否允许dhcp&nbsp;server分配的dns服务器指向覆盖本地手动指定的DNS服务器指向；默认为允许；
+&nbsp;&nbsp;&nbsp;&nbsp;HWADDR：设备的MAC地址；&nbsp;&nbsp;&nbsp;&nbsp;#不能随便修改，出厂的时候厂商给的，在文件中删除就好了
+&nbsp;&nbsp;&nbsp;&nbsp;NM_CONTROLLED：是否使用NetworkManager服务来控制接口；&nbsp;&nbsp;&nbsp;&nbsp;#在CentOS&nbsp;6及以前不启用，一般用network）</pre>
+<h2>Q8：如何给网络接口配置多个地址，有哪些方式？</h2>
+<pre>#临时生效：
+使用ip&nbsp;/&nbsp;ifconfig输入命令：
+~]#&nbsp;ip&nbsp;addr&nbsp;add&nbsp;IP/mask&nbsp;dev&nbsp;eth0:0
+~]#&nbsp;ifconfig&nbsp;IFACE_LABEL&nbsp;IPADDR/NETMASK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#其中IFACE_LABEL：eth0:0,&nbsp;eth0:1；
+
+#修改配置文件：
+DEVICE=IFACE_LABEL
+BOOTPROTO:网上别名不支持动态获取地址,&nbsp;static,&nbsp;none；</pre>
+<h2>Q9：常用的网络管理类工具有哪些，并用示例形式描述他们的使用方法。</h2>
+<pre>ifconfig命令：接口及地址查看和管理
+&nbsp;&nbsp;&nbsp;&nbsp;ifconfig&nbsp;&nbsp;[INTERFACE]
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;ifconfig&nbsp;-a：显示所有接口，包括inactive状态的接口；
+&nbsp;&nbsp;&nbsp;&nbsp;ifconfig&nbsp;interface&nbsp;[aftype]&nbsp;options&nbsp;|&nbsp;address&nbsp;...
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;ifconfig&nbsp;&nbsp;IFACE&nbsp;&nbsp;IP/MASK&nbsp;&nbsp;[up|down]
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;ifconfig&nbsp;&nbsp;IFACE&nbsp;&nbsp;IP&nbsp;&nbsp;netmask&nbsp;&nbsp;NETMASK
+&nbsp;&nbsp;&nbsp;&nbsp;options：
+&nbsp;&nbsp;&nbsp;&nbsp;[-]promisc&nbsp;&nbsp;&nbsp;&nbsp;混杂模式；
+&nbsp;&nbsp;&nbsp;&nbsp;~]#&nbsp;ifconfig&nbsp;eth1&nbsp;promisc&nbsp;&nbsp;&nbsp;&nbsp;打开混杂模式；
+&nbsp;&nbsp;&nbsp;&nbsp;~]#&nbsp;ifconfig&nbsp;eth1&nbsp;-promisc&nbsp;&nbsp;&nbsp;&nbsp;关闭混杂模式；
+
+route命令：路由查看及管理
+&nbsp;&nbsp;&nbsp;&nbsp;查看：
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;route&nbsp;&nbsp;-n
+&nbsp;&nbsp;&nbsp;&nbsp;添加：
+&nbsp;&nbsp;&nbsp;&nbsp;route&nbsp;&nbsp;add&nbsp;&nbsp;[-net|-host]&nbsp;&nbsp;target&nbsp;&nbsp;[netmask&nbsp;&nbsp;Nm]&nbsp;&nbsp;[gw&nbsp;GW]&nbsp;&nbsp;[[dev]&nbsp;If]&nbsp;&nbsp;&nbsp;&nbsp;网络路由/主机路由
+&nbsp;&nbsp;&nbsp;&nbsp;示例：route&nbsp;add&nbsp;-net&nbsp;&nbsp;10.0.0.0/8&nbsp;&nbsp;gw&nbsp;&nbsp;192.168.10.1&nbsp;&nbsp;dev&nbsp;&nbsp;eth1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;route&nbsp;add&nbsp;&nbsp;-net&nbsp;&nbsp;0.0.0.0/0.0.0.0&nbsp;&nbsp;gw&nbsp;192.168.10.1&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;route&nbsp;add&nbsp;&nbsp;default&nbsp;&nbsp;gw&nbsp;192.168.10.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;表示为默认网关
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;【配置单个主机】options改为&nbsp;-host即可&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;删除：
+&nbsp;&nbsp;&nbsp;&nbsp;route&nbsp;&nbsp;del&nbsp;&nbsp;[-net|-host]&nbsp;target&nbsp;&nbsp;[gw&nbsp;Gw]&nbsp;&nbsp;[netmask&nbsp;Nm]&nbsp;&nbsp;[[dev]&nbsp;If]
+&nbsp;&nbsp;&nbsp;&nbsp;示例：route&nbsp;&nbsp;del&nbsp;&nbsp;-net&nbsp;&nbsp;10.0.0.0/8&nbsp;&nbsp;gw&nbsp;192.168.10.1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;route&nbsp;&nbsp;del&nbsp;&nbsp;default
+
+netstat命令：
+&nbsp;&nbsp;&nbsp;&nbsp;显示路由表：netstat&nbsp;&nbsp;-rn
+&nbsp;&nbsp;&nbsp;&nbsp;-r：显示内核路由表
+&nbsp;&nbsp;&nbsp;&nbsp;-n：数字格式
+&nbsp;&nbsp;&nbsp;&nbsp;显示网络连接：
+&nbsp;&nbsp;&nbsp;&nbsp;netstat&nbsp;&nbsp;[--tcp|-t]&nbsp;&nbsp;[--udp|-u]&nbsp;&nbsp;[--udplite|-U]&nbsp;&nbsp;[--sctp|-S]&nbsp;&nbsp;[--raw|-w]&nbsp;&nbsp;[--listening|-l]&nbsp;&nbsp;[--all|-a]&nbsp;&nbsp;[--numeric|-n]&nbsp;&nbsp;&nbsp;[--extend|-e[--extend|-e]]&nbsp;&nbsp;[--program|-p]
+&nbsp;&nbsp;&nbsp;&nbsp;-t：TCP协议的相关连接，连接均有其状态；FSM（Finate&nbsp;State&nbsp;Machine）；
+&nbsp;&nbsp;&nbsp;&nbsp;-u：UDP相关的连接
+&nbsp;&nbsp;&nbsp;&nbsp;-w：raw&nbsp;socket相关的连接
+&nbsp;&nbsp;&nbsp;&nbsp;-l：处于监听状态的连接
+&nbsp;&nbsp;&nbsp;&nbsp;-a：所有状态
+&nbsp;&nbsp;&nbsp;&nbsp;-n：以数字格式显示IP和Port；
+&nbsp;&nbsp;&nbsp;&nbsp;-e：扩展格式
+&nbsp;&nbsp;&nbsp;&nbsp;-p：显示相关的进程及PID；
+&nbsp;&nbsp;&nbsp;&nbsp;常用组合：
+&nbsp;&nbsp;&nbsp;&nbsp;-tan,&nbsp;&nbsp;-uan,&nbsp;&nbsp;-tnl,&nbsp;&nbsp;-unl,&nbsp;&nbsp;-tunlp
+显示接口的统计数据：
+&nbsp;&nbsp;&nbsp;&nbsp;netstat&nbsp;&nbsp;&nbsp;&nbsp;{--interfaces|-I|-i}&nbsp;&nbsp;&nbsp;&nbsp;[iface]&nbsp;&nbsp;&nbsp;[--all|-a]&nbsp;&nbsp;&nbsp;[--extend|-e]&nbsp;&nbsp;&nbsp;[--verbose|-v]&nbsp;&nbsp;&nbsp;[--program|-p]&nbsp;&nbsp;[--numeric|-n]
+&nbsp;&nbsp;&nbsp;&nbsp;所有接口：
+&nbsp;&nbsp;&nbsp;&nbsp;netstat&nbsp;&nbsp;-i
+&nbsp;&nbsp;&nbsp;&nbsp;指定接口：
+&nbsp;&nbsp;&nbsp;&nbsp;netstat&nbsp;&nbsp;-I&lt;IFace&gt;
+
+&nbsp;&nbsp;&nbsp;&nbsp;ifup/ifdown命令：
+&nbsp;&nbsp;&nbsp;&nbsp;注意：通过配置文件/etc/sysconfig/network-scripts/ifcfg-IFACE来识别接口并完成配置；
+
+ip命令：
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;[&nbsp;OPTIONS&nbsp;]&nbsp;OBJECT&nbsp;{&nbsp;COMMAND&nbsp;|&nbsp;help&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;OBJECT&nbsp;:=&nbsp;{&nbsp;link&nbsp;|&nbsp;addr&nbsp;|&nbsp;route&nbsp;|&nbsp;netns&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;注意：&nbsp;OBJECT可简写，各OBJECT的子命令也可简写；
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;&nbsp;OBJECT：
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;link：&nbsp;network&nbsp;device&nbsp;configuration&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网络设备配置；
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;&nbsp;link&nbsp;&nbsp;set&nbsp;-&nbsp;change&nbsp;device&nbsp;attributes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;与ifconfig很相似，用于设置某属性属于什么状态；
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;[dev]&nbsp;NAME&nbsp;(default)&gt;：指明要管理的设备，dev关键字可省略；
+&nbsp;&nbsp;&nbsp;&nbsp;up和down：启用或禁用接口；&nbsp;&nbsp;~]#&nbsp;ip&nbsp;link&nbsp;set&nbsp;[dev]&nbsp;eth1&nbsp;up
+&nbsp;&nbsp;&nbsp;&nbsp;multicast&nbsp;on或multicast&nbsp;off：启用或禁用多播功能；
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;NAME：重命名网络接口；
+&nbsp;&nbsp;&nbsp;&nbsp;mtu&nbsp;NUMBER：设置MTU的大小，以太网接口默认为1500；
+&nbsp;&nbsp;&nbsp;&nbsp;netns&nbsp;PID：ns为namespace，用于将接口移动到指定的网络名称空间；
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;&nbsp;link&nbsp;&nbsp;show&nbsp;&nbsp;-&nbsp;display&nbsp;device&nbsp;attributes
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;&nbsp;link&nbsp;&nbsp;help&nbsp;-&nbsp;&nbsp;显示简要使用帮助；
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;netns：&nbsp;&nbsp;-&nbsp;manage&nbsp;network&nbsp;namespaces.
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;&nbsp;netns&nbsp;&nbsp;list：列出所有的netns
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;&nbsp;netns&nbsp;&nbsp;add&nbsp;&nbsp;NAME：创建指定的netns
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;&nbsp;netns&nbsp;&nbsp;del&nbsp;&nbsp;NAME：删除指定的netns
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;&nbsp;netns&nbsp;&nbsp;&nbsp;exec&nbsp;&nbsp;NAME&nbsp;&nbsp;COMMAND：在指定的netns中运行命令
+ip&nbsp;address&nbsp;-&nbsp;protocol&nbsp;address&nbsp;management.&nbsp;&nbsp;&nbsp;&nbsp;用于协议地址管理，简言之用于管理IP地址；
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;address&nbsp;add&nbsp;-&nbsp;add&nbsp;new&nbsp;protocol&nbsp;address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加新IP地址；
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;&nbsp;addr&nbsp;&nbsp;add&nbsp;&nbsp;IFADDR&nbsp;&nbsp;dev&nbsp;&nbsp;IFACE
+&nbsp;&nbsp;&nbsp;&nbsp;[label&nbsp;NAME]：为额外添加的地址（主地址以外）指明接口别名；
+&nbsp;&nbsp;&nbsp;&nbsp;[broadcast&nbsp;ADDRESS]：广播地址；会根据IP和NETMASK自动计算得到；
+&nbsp;&nbsp;&nbsp;&nbsp;[scope&nbsp;SCOPE_VALUE]：（了解，不记也没关系）scope表示作用域；
+&nbsp;&nbsp;&nbsp;&nbsp;global：全局可用；（大多数情况下，就使用这个）
+&nbsp;&nbsp;&nbsp;&nbsp;link：接口可用；
+&nbsp;&nbsp;&nbsp;&nbsp;host：仅本机可用；
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;address&nbsp;delete&nbsp;-&nbsp;delete&nbsp;protocol&nbsp;address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除IP地址；
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;addr&nbsp;&nbsp;delete&nbsp;&nbsp;IFADDR&nbsp;&nbsp;dev&nbsp;&nbsp;IFACE&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;address&nbsp;show&nbsp;-&nbsp;look&nbsp;at&nbsp;protocol&nbsp;addresses&nbsp;&nbsp;&nbsp;&nbsp;查看IP地址；
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;&nbsp;addr&nbsp;&nbsp;&nbsp;list&nbsp;&nbsp;[IFACE]：显示接口的地址；
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;address&nbsp;flush&nbsp;-&nbsp;flush&nbsp;protocol&nbsp;addresses&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除IP地址，清空所有的IP地址；
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;&nbsp;addr&nbsp;&nbsp;flush&nbsp;&nbsp;dev&nbsp;&nbsp;IFACE
+
+ip&nbsp;route&nbsp;-&nbsp;routing&nbsp;table&nbsp;management&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#用于路由表管理命令；
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;route&nbsp;add&nbsp;-&nbsp;add&nbsp;new&nbsp;route&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#添加路由；
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;route&nbsp;change&nbsp;-&nbsp;change&nbsp;route&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#修改路由；
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;route&nbsp;replace&nbsp;-&nbsp;change&nbsp;or&nbsp;add&nbsp;new&nbsp;one&nbsp;&nbsp;&nbsp;&nbsp;#（有老的）修改路由，（没有老的）添加路由；
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;&nbsp;route&nbsp;&nbsp;&nbsp;add&nbsp;&nbsp;TYPE&nbsp;PREFIX&nbsp;&nbsp;via&nbsp;GW&nbsp;&nbsp;[dev&nbsp;&nbsp;IFACE]&nbsp;&nbsp;[src&nbsp;SOURCE_IP]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#PREFIX指的是长度的掩码；
+&nbsp;&nbsp;&nbsp;&nbsp;示例：
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;ip&nbsp;route&nbsp;add&nbsp;192.168.0.0/24&nbsp;&nbsp;via&nbsp;10.0.0.1&nbsp;&nbsp;dev&nbsp;eth1&nbsp;src&nbsp;&nbsp;10.0.20.100
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;ip&nbsp;&nbsp;route&nbsp;&nbsp;add&nbsp;default&nbsp;&nbsp;via&nbsp;&nbsp;GW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;route&nbsp;delete&nbsp;-&nbsp;delete&nbsp;route&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#删除路由；
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;&nbsp;route&nbsp;&nbsp;del&nbsp;&nbsp;TYPE&nbsp;PRIFIX&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;示例：
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;ip&nbsp;&nbsp;route&nbsp;delete&nbsp;&nbsp;192.168.1.0/24
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;route&nbsp;show&nbsp;-&nbsp;list&nbsp;routes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#显示路由信息；
+&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;PRIFIX&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;route&nbsp;flush&nbsp;-&nbsp;flush&nbsp;routing&nbsp;tables&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#清空路由表；
+&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;&nbsp;PRIFIX
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;route&nbsp;get&nbsp;-&nbsp;get&nbsp;a&nbsp;single&nbsp;route&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#获取（指定的）单条路由；（了解即可）
+&nbsp;&nbsp;&nbsp;&nbsp;ip&nbsp;&nbsp;route&nbsp;&nbsp;get&nbsp;&nbsp;TYPE&nbsp;PRIFIX
+&nbsp;&nbsp;&nbsp;&nbsp;示例：ip&nbsp;route&nbsp;&nbsp;get&nbsp;&nbsp;192.168.0.0/24
+
+ss命令：
+&nbsp;&nbsp;&nbsp;&nbsp;ss&nbsp;&nbsp;[options]&nbsp;&nbsp;[&nbsp;FILTER&nbsp;]
+&nbsp;&nbsp;&nbsp;&nbsp;选项：
+&nbsp;&nbsp;&nbsp;&nbsp;-t：TCP协议的相关连接
+&nbsp;&nbsp;&nbsp;&nbsp;-u：UDP相关的连接
+&nbsp;&nbsp;&nbsp;&nbsp;-w：raw&nbsp;socket相关的连接
+&nbsp;&nbsp;&nbsp;&nbsp;-l：监听状态的连接
+&nbsp;&nbsp;&nbsp;&nbsp;-a：所有状态的连接
+&nbsp;&nbsp;&nbsp;&nbsp;-n：数字格式
+&nbsp;&nbsp;&nbsp;&nbsp;-p：相关的程序及其PID
+&nbsp;&nbsp;&nbsp;&nbsp;-e：扩展格式信息
+&nbsp;&nbsp;&nbsp;&nbsp;-m：内存用量
+&nbsp;&nbsp;&nbsp;&nbsp;-o：计时器信息
+&nbsp;&nbsp;&nbsp;&nbsp;FILTER&nbsp;:=&nbsp;[&nbsp;state&nbsp;TCP-STATE&nbsp;]&nbsp;&nbsp;[&nbsp;EXPRESSION&nbsp;]
+&nbsp;&nbsp;&nbsp;&nbsp;TCP的常见状态：
+&nbsp;&nbsp;&nbsp;&nbsp;TCP&nbsp;FSM：
+&nbsp;&nbsp;&nbsp;&nbsp;LISTEN：监听
+&nbsp;&nbsp;&nbsp;&nbsp;ESTABLISEHD：建立的连接
+&nbsp;&nbsp;&nbsp;&nbsp;FIN_WAIT_1：
+&nbsp;&nbsp;&nbsp;&nbsp;FIN_WAIT_2：
+&nbsp;&nbsp;&nbsp;&nbsp;SYN_SENT：
+&nbsp;&nbsp;&nbsp;&nbsp;SYN_RECV：
+&nbsp;&nbsp;&nbsp;&nbsp;CLOSED：
+&nbsp;&nbsp;&nbsp;&nbsp;EXPRESSION：
+&nbsp;&nbsp;&nbsp;&nbsp;dport&nbsp;=&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;sport&nbsp;=&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;示例：&#039;(&nbsp;dport&nbsp;=&nbsp;:22&nbsp;or&nbsp;sport&nbsp;=&nbsp;:22)&#039;
+&nbsp;&nbsp;&nbsp;&nbsp;~]#&nbsp;ss&nbsp;&nbsp;&nbsp;-tan&nbsp;&nbsp;&nbsp;&nbsp;&#039;(&nbsp;&nbsp;dport&nbsp;=&nbsp;:22&nbsp;or&nbsp;sport&nbsp;=&nbsp;:22&nbsp;&nbsp;)&#039;
+&nbsp;&nbsp;&nbsp;&nbsp;~]#&nbsp;ss&nbsp;&nbsp;-tan&nbsp;&nbsp;state&nbsp;&nbsp;ESTABLISHED</pre>
+<h2>Q10：Linux系统软件包管理方法（安装、升级、卸载等操作）有哪些，以及如何管理的。</h2>
+<pre>rpm命令：rpm&nbsp;&nbsp;[OPTIONS]&nbsp;&nbsp;[PACKAGE_FILE]
+安装：
+&nbsp;&nbsp;&nbsp;&nbsp;rpm&nbsp;{-i|--install}&nbsp;[install-options]&nbsp;PACKAGE_FILE&nbsp;...
+&nbsp;&nbsp;&nbsp;&nbsp;rpm&nbsp;&nbsp;-ivh&nbsp;&nbsp;PACKAGE_FILE&nbsp;...
+&nbsp;&nbsp;&nbsp;&nbsp;GENERAL&nbsp;OPTIONS：
+&nbsp;&nbsp;&nbsp;&nbsp;-v：verbose，详细信息
+&nbsp;&nbsp;&nbsp;&nbsp;-vv：更详细的输出
+&nbsp;&nbsp;&nbsp;&nbsp;[install-options]：
+&nbsp;&nbsp;&nbsp;&nbsp;-h：hash&nbsp;marks输出进度条；每个#表示2%的进度；
+&nbsp;&nbsp;&nbsp;&nbsp;--test：测试安装，检查并报告依赖关系及冲突消息等；
+&nbsp;&nbsp;&nbsp;&nbsp;--nodeps：忽略依赖关系；不建议；
+&nbsp;&nbsp;&nbsp;&nbsp;--replacepkgs：重新安装
+&nbsp;&nbsp;&nbsp;&nbsp;注意：rpm可以自带脚本；
+&nbsp;&nbsp;&nbsp;&nbsp;四类：--noscripts
+&nbsp;&nbsp;&nbsp;&nbsp;preinstall：安装过程开始之前运行的脚本，%pre&nbsp;，&nbsp;--nopre
+&nbsp;&nbsp;&nbsp;&nbsp;postinstall：安装过程完成之后运行的脚本，%post&nbsp;,&nbsp;--nopost
+&nbsp;&nbsp;&nbsp;&nbsp;preuninstall：卸载过程真正开始执行之前运行的脚本，%preun,&nbsp;--nopreun&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;postuninstall：卸载过程完成之后运行的脚本，%postun&nbsp;,&nbsp;--nopostun
+&nbsp;&nbsp;&nbsp;&nbsp;--nosignature：不检查包签名信息，不检查来源合法性；
+&nbsp;&nbsp;&nbsp;&nbsp;--nodigest：不检查包完整性信息；
+升级：
+&nbsp;&nbsp;&nbsp;&nbsp;rpm&nbsp;{-U|--upgrade}&nbsp;[install-options]&nbsp;PACKAGE_FILE&nbsp;...
+&nbsp;&nbsp;&nbsp;&nbsp;rpm&nbsp;{-F|--freshen}&nbsp;[install-options]&nbsp;PACKAGE_FILE&nbsp;...
+&nbsp;&nbsp;&nbsp;&nbsp;-U：升级或安装；
+&nbsp;&nbsp;&nbsp;&nbsp;-F：升级
+&nbsp;&nbsp;&nbsp;&nbsp;rpm&nbsp;&nbsp;-Uvh&nbsp;PACKAGE_FILE&nbsp;...
+&nbsp;&nbsp;&nbsp;&nbsp;rpm&nbsp;&nbsp;-Fvh&nbsp;PACKAGE_FILE&nbsp;...&nbsp;&nbsp;&nbsp;&nbsp;纯粹的升级操作；
+&nbsp;&nbsp;&nbsp;&nbsp;--oldpackage：降级；
+&nbsp;&nbsp;&nbsp;&nbsp;--force：强制升级；
+&nbsp;&nbsp;&nbsp;&nbsp;注意：(1)&nbsp;不要对内核做升级操作；Linux支持多内核版本并存，因此，直接安装新版本内核；
+&nbsp;&nbsp;&nbsp;&nbsp;(2)&nbsp;如果某原程序包的配置文件安装后曾被修改过，升级时，新版本的程序提供的同一个配置文件不会覆盖原有版本的配置文件，而是把新版本的配置文件重命名(FILENAME.rpmnew)后提供；
+卸载：
+&nbsp;&nbsp;&nbsp;&nbsp;rpm&nbsp;{-e|--erase}&nbsp;[--allmatches]&nbsp;[--nodeps]&nbsp;[--noscripts]&nbsp;[--test]&nbsp;PACKAGE_NAME&nbsp;...
+&nbsp;&nbsp;&nbsp;&nbsp;卸载时是PACKAGE_NAME，包名即可；
+&nbsp;&nbsp;&nbsp;&nbsp;--allmatches：卸载所有匹配指定名称的程序包的各版本；
+&nbsp;&nbsp;&nbsp;&nbsp;--nodeps：忽略依赖关系
+&nbsp;&nbsp;&nbsp;&nbsp;--test：测试卸载，dry&nbsp;run模式
+查询：
+&nbsp;&nbsp;&nbsp;&nbsp;rpm&nbsp;{-q|--query}&nbsp;[select-options]&nbsp;[query-options]
+&nbsp;&nbsp;&nbsp;&nbsp;[select-options]
+&nbsp;&nbsp;&nbsp;&nbsp;PACKAGE_NAME：查询指定的程序包是否已经安装，及其版本；
+&nbsp;&nbsp;&nbsp;&nbsp;-a,&nbsp;--all：查询所有已经安装过的包；
+&nbsp;&nbsp;&nbsp;&nbsp;-f&nbsp;&nbsp;FILE：查询指定的文件FILE由哪个程序包安装生成；
+&nbsp;&nbsp;&nbsp;&nbsp;-p,&nbsp;--package&nbsp;PACKAGE_FILE：用于实现对未安装的程序包执行查询操作；
+&nbsp;&nbsp;&nbsp;&nbsp;--whatprovides&nbsp;CAPABILITY：查询指定的CAPABILITY由哪个程序包提供；
+&nbsp;&nbsp;&nbsp;&nbsp;--whatrequires&nbsp;CAPABILITY：查询指定的CAPABILITY被哪个包所依赖；
+&nbsp;&nbsp;&nbsp;&nbsp;e.g.
+&nbsp;&nbsp;&nbsp;&nbsp;~]#&nbsp;rpm&nbsp;-q&nbsp;--whatprovides&nbsp;bash&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查询bash安装时的包的名称；
+&nbsp;&nbsp;&nbsp;&nbsp;bash-4.2.46-19.el7.x86_64
+&nbsp;&nbsp;&nbsp;&nbsp;~]#&nbsp;rpm&nbsp;-q&nbsp;--whatrequires&nbsp;bash&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;查询bash被哪些程序包所依赖；
+&nbsp;&nbsp;&nbsp;&nbsp;dracut-033-359.el7.x86_64
+&nbsp;&nbsp;&nbsp;&nbsp;initscripts-9.49.30-1.el7.x86_64
+&nbsp;&nbsp;&nbsp;&nbsp;rsyslog-7.4.7-12.el7.x86_64
+&nbsp;&nbsp;&nbsp;&nbsp;lvm2-2.02.130-5.el7.x86_64
+&nbsp;&nbsp;&nbsp;&nbsp;[query-options]
+&nbsp;&nbsp;&nbsp;&nbsp;--changelog：查询rpm包的changlog；
+&nbsp;&nbsp;&nbsp;&nbsp;-l,&nbsp;--list：程序安装生成的所有文件列表；
+&nbsp;&nbsp;&nbsp;&nbsp;-i,&nbsp;--info：程序包相关的信息，版本号、大小、所属的包组，等；
+&nbsp;&nbsp;&nbsp;&nbsp;-c,&nbsp;--configfiles：查询指定的程序包提供的配置文件；
+&nbsp;&nbsp;&nbsp;&nbsp;-d,&nbsp;--docfiles：查询指定的程序包提供的文档；
+&nbsp;&nbsp;&nbsp;&nbsp;--provides：列出指定的程序包提供的所有的CAPABILITY；
+&nbsp;&nbsp;&nbsp;&nbsp;-R,&nbsp;--requires：查询指定的程序包的依赖关系；
+&nbsp;&nbsp;&nbsp;&nbsp;--scripts：查看程序包自带的脚本片断；（四个脚本：安装前、安装、卸载、卸载后，其中安装前和卸载后可以没有）
+用法：
+&nbsp;&nbsp;&nbsp;&nbsp;-qi&nbsp;&nbsp;PACKAGE,&nbsp;-qf&nbsp;FILE,&nbsp;-qc&nbsp;PACKAGE,&nbsp;-ql&nbsp;PACKAGE,&nbsp;-qd&nbsp;PACKAGE
+&nbsp;&nbsp;&nbsp;&nbsp;-qpi&nbsp;&nbsp;PACKAGE_FILE,&nbsp;-qpl&nbsp;PACKAGE_FILE,&nbsp;-qpc&nbsp;PACKAGE_FILE,&nbsp;...
+校验：
+&nbsp;&nbsp;&nbsp;&nbsp;rpm&nbsp;{-V|--verify}&nbsp;[select-options]&nbsp;[verify-options]&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;防止安装包在发布的时候，被做了修改，开启后门程序之类的；
+&nbsp;&nbsp;&nbsp;&nbsp;S&nbsp;file&nbsp;Size&nbsp;differs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文件大小发生改变；
+&nbsp;&nbsp;&nbsp;&nbsp;M&nbsp;Mode&nbsp;differs&nbsp;(includes&nbsp;permissions&nbsp;and&nbsp;file&nbsp;type)&nbsp;&nbsp;权限发生改变；
+&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;digest&nbsp;(formerly&nbsp;MD5&nbsp;sum)&nbsp;differs&nbsp;&nbsp;MD5码发生改变，文件的内容完整性发生改变；
+&nbsp;&nbsp;&nbsp;&nbsp;D&nbsp;Device&nbsp;major/minor&nbsp;number&nbsp;mismatch&nbsp;&nbsp;主次设备号不匹配；
+&nbsp;&nbsp;&nbsp;&nbsp;L&nbsp;readLink(2)&nbsp;path&nbsp;mismatch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;readLink的路径不匹配；
+&nbsp;&nbsp;&nbsp;&nbsp;U&nbsp;User&nbsp;ownership&nbsp;differs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;属主修改了；
+&nbsp;&nbsp;&nbsp;&nbsp;G&nbsp;Group&nbsp;ownership&nbsp;differs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;属组修改了；
+&nbsp;&nbsp;&nbsp;&nbsp;T&nbsp;mTime&nbsp;differs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;最近一次的时间戳修改了；
+&nbsp;&nbsp;&nbsp;&nbsp;P&nbsp;caPabilities&nbsp;differ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;caPabilities发生改变；
+
+yum命令的用法：yum&nbsp;[options]&nbsp;[command]&nbsp;[package&nbsp;...]
+显示仓库列表：
+repolist&nbsp;[all|enabled|disabled]
+显示程序包：
+&nbsp;&nbsp;&nbsp;&nbsp;list
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;yum&nbsp;list&nbsp;[all&nbsp;|&nbsp;glob_exp1]&nbsp;[glob_exp2]&nbsp;[...]
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;yum&nbsp;list&nbsp;{available|installed|updates}&nbsp;[glob_exp1]&nbsp;[...]
+安装程序包：
+&nbsp;&nbsp;&nbsp;&nbsp;install&nbsp;package1&nbsp;[package2]&nbsp;[...]
+&nbsp;&nbsp;&nbsp;&nbsp;reinstall&nbsp;package1&nbsp;[package2]&nbsp;[...]&nbsp;&nbsp;(重新安装)
+升级程序包：
+&nbsp;&nbsp;&nbsp;&nbsp;update&nbsp;[package1]&nbsp;[package2]&nbsp;[...]
+&nbsp;&nbsp;&nbsp;&nbsp;downgrade&nbsp;package1&nbsp;[package2]&nbsp;[...]&nbsp;(降级)
+检查可用升级：
+&nbsp;&nbsp;&nbsp;&nbsp;check-update
+卸载程序包：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;依赖于次程序包的也都会被卸载；
+&nbsp;&nbsp;&nbsp;&nbsp;remove&nbsp;|&nbsp;erase&nbsp;package1&nbsp;[package2]&nbsp;[...]
+查看程序包information：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;显示出类似于rpm&nbsp;-qi的结果；
+&nbsp;&nbsp;&nbsp;&nbsp;info&nbsp;[...]
+查看指定的特性(可以是某文件)是由哪个程序包所提供：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;显示出类似于rpm&nbsp;-qf的结果；
+&nbsp;&nbsp;&nbsp;&nbsp;provides&nbsp;|&nbsp;whatprovides&nbsp;feature1&nbsp;[feature2]&nbsp;[...]
+清理本地缓存：&nbsp;&nbsp;&nbsp;&nbsp;因为yum下载之后，程序包会自动删除，元数据不会被删除，用这个命令手动删除；
+&nbsp;&nbsp;&nbsp;&nbsp;clean&nbsp;[&nbsp;packages&nbsp;|&nbsp;metadata&nbsp;|&nbsp;expire-cache&nbsp;|&nbsp;rpmdb&nbsp;|&nbsp;plugins&nbsp;|&nbsp;all&nbsp;]
+构建缓存：从各仓库下载创建，无需自己去做，每次使用yum命令的时候会自动做的；
+&nbsp;&nbsp;&nbsp;&nbsp;makecache
+搜索：
+&nbsp;&nbsp;&nbsp;&nbsp;search&nbsp;string1&nbsp;[string2]&nbsp;[...]
+&nbsp;&nbsp;&nbsp;&nbsp;以指定的关键字搜索程序包名及summary信息；
+查看指定包所依赖的capabilities：
+&nbsp;&nbsp;&nbsp;&nbsp;deplist&nbsp;package1&nbsp;[package2]&nbsp;[...]
+查看yum事务历史：
+&nbsp;&nbsp;&nbsp;&nbsp;history&nbsp;[info|list|packages-list|packages-info|summary|addon-info|redo|undo|rollback|new|sync|stats]
+安装及升级本地程序包：
+&nbsp;&nbsp;&nbsp;&nbsp;yum&nbsp;localinstall&nbsp;rpmfile1&nbsp;[rpmfile2]&nbsp;[...]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(maintained&nbsp;for&nbsp;legacy&nbsp;reasons&nbsp;only&nbsp;-&nbsp;use&nbsp;install)
+yum&nbsp;localupdate&nbsp;rpmfile1&nbsp;[rpmfile2]&nbsp;[...]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(maintained&nbsp;for&nbsp;legacy&nbsp;reasons&nbsp;only&nbsp;-&nbsp;use&nbsp;update)
+包组管理的相关命令：
+&nbsp;&nbsp;&nbsp;&nbsp;yum&nbsp;groupinstall&nbsp;group1&nbsp;[group2]&nbsp;[...]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;安装指定包组；组名可能要加“”；
+&nbsp;&nbsp;&nbsp;&nbsp;yum&nbsp;groupupdate&nbsp;group1&nbsp;[group2]&nbsp;[...]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;yum&nbsp;grouplist&nbsp;[hidden]&nbsp;[groupwildcard]&nbsp;[...]&nbsp;&nbsp;&nbsp;&nbsp;显示指定包组；
+&nbsp;&nbsp;&nbsp;&nbsp;yum&nbsp;groupremove&nbsp;group1&nbsp;[group2]&nbsp;[...]
+&nbsp;&nbsp;&nbsp;&nbsp;yum&nbsp;groupinfo&nbsp;group1&nbsp;[...]</pre>
+<h2>Q11：如何使用发行版光盘作为yum repository，请描述该过程。</h2>
+<pre>(1)挂载光盘至某目录
+~]#&nbsp;mount&nbsp;-r&nbsp;/dev/cdrom&nbsp;/media/cdrom
+(2)创建配置文件
+~]#&nbsp;vim&nbsp;/etc/yum.repos.d/local.repo
+[CentOS7]
+name=CentOS7
+baseurl=file:///media/cdrom
+enable=1
+gpgcheck=0</pre>
+<h2>Q12：写一个脚本，完成以下功能</h2>
+<ul class=" list-paddingleft-2">
+<li>
+<p>(1) 假设某目录(/etc/rc.d/rc3.d/)下分别有K开头的文件和S开头的文件若干；</p>
+</li>
+<li>
+<p>(2) 显示所有以K开头的文件的文件名，并且给其附加一个stop字符串；</p>
+</li>
+<li>
+<p>(3) 显示所有以S开头的文件的文件名，并且给其附加一个start字符串；</p>
+</li>
+<li>
+<p>(4) 分别统计S开头和K开头的文件各有多少；</p>
+</li>
+</ul>
+<pre>#!/bin/bash
+#
+declare&nbsp;-i&nbsp;s=0
+declare&nbsp;-i&nbsp;k=0
+for&nbsp;i&nbsp;in&nbsp;$(ls&nbsp;/etc/rc.d/rc3.d/);do
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;[[&nbsp;$i&nbsp;==&nbsp;S*&nbsp;]];then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;$i.start
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s+=1
+&nbsp;&nbsp;&nbsp;&nbsp;fi
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;[[&nbsp;$i&nbsp;==&nbsp;K*&nbsp;]];then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;$i.stop
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k+=1
+&nbsp;&nbsp;&nbsp;&nbsp;fi
+done
+echo&nbsp;-e&nbsp;&quot;S&nbsp;start:$s\nK&nbsp;start:$k&quot;</pre>
+<h2>Q13：写一个脚本，完成以下功能</h2>
+<ul class=" list-paddingleft-2">
+<li>
+<p>(1) 脚本能接受用户名作为参数；</p>
+</li>
+<li>
+<p>(2) 计算此些用户的ID之和；</p>
+</li>
+</ul>
+<pre>#!/bin/bash
+#
+[&nbsp;$#&nbsp;-eq&nbsp;0&nbsp;]&nbsp;&amp;&amp;&nbsp;echo&nbsp;-e&nbsp;&quot;User&nbsp;name(s)&nbsp;needed!\nPlease&nbsp;try&nbsp;again!&quot;&nbsp;&amp;&amp;&nbsp;exit&nbsp;1
+
+declare&nbsp;-i&nbsp;sum=0
+for&nbsp;i&nbsp;in&nbsp;$@;do
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;id&nbsp;$i&nbsp;&amp;&gt;&nbsp;/dev/null;then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum+=$(id&nbsp;-u&nbsp;$i)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;&quot;$i&nbsp;not&nbsp;exits!&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fi
+done
+echo&nbsp;&quot;Exiting&nbsp;users&#039;&nbsp;ID&nbsp;sum:$sum&quot;</pre>
+<h2>Q14：写一个脚本</h2>
+<ul class=" list-paddingleft-2">
+<li>
+<p>(1) 传递一些目录给此脚本；</p>
+</li>
+<li>
+<p>(2) 逐个显示每个目录的所有一级文件或子目录的内容类型；</p>
+</li>
+<li>
+<p>(3) 统计一共有多少个目录；且一共显示了多少个文件的内容类型；</p>
+</li>
+</ul>
+<pre>#!/bin/bash
+#
+if&nbsp;[&nbsp;$#&nbsp;-lt&nbsp;1&nbsp;];then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;-e&nbsp;&quot;At&nbsp;least&nbsp;one&nbsp;arg!\nPlease&nbsp;try&nbsp;again!&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;1
+fi
+
+declare&nbsp;-i&nbsp;dir=0
+declare&nbsp;-i&nbsp;file=0
+for&nbsp;i&nbsp;in&nbsp;$@;do
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;ls&nbsp;$i&nbsp;&amp;&gt;&nbsp;/dev/null;then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;j&nbsp;in&nbsp;$(ls&nbsp;$i);do
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;[&nbsp;-d&nbsp;$i/$j&nbsp;];then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;dir++
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;[&nbsp;-f&nbsp;$i/$j&nbsp;]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;file++
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fi
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;done
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;&quot;$i&nbsp;not&nbsp;exits!&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fi
+done
+echo&nbsp;&quot;directory&nbsp;number:$dir,file&nbsp;number:$file&quot;</pre>
+<h2>Q15：写一个脚本：通过命令行传递一个参数给脚本，参数为用户名，如果用户的id号大于等于500，则显示此用户为普通用户；</h2>
+<pre>#!/bin/bash
+#
+if&nbsp;[&nbsp;$#&nbsp;-lt&nbsp;1&nbsp;];then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;&quot;One&nbsp;arg&nbsp;is&nbsp;needed!&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;1
+fi
+
+if&nbsp;id&nbsp;$1&nbsp;&amp;&gt;&nbsp;/dev/null;then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;[&nbsp;`id&nbsp;-u&nbsp;$1`&nbsp;-ge&nbsp;500&nbsp;];then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;&quot;$1&nbsp;is&nbsp;a&nbsp;nomal&nbsp;user.&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elif&nbsp;[&nbsp;`id&nbsp;-u&nbsp;$1`&nbsp;-ge&nbsp;1&nbsp;];then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;&quot;$1&nbsp;is&nbsp;a&nbsp;system&nbsp;user.&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;&quot;$1&nbsp;is&nbsp;a&nbsp;root&nbsp;user.&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fi
+else
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;&quot;$1&nbsp;not&nbsp;exits.&quot;
+fi</pre>
+<h2>Q16：写一个脚本</h2>
+<ul class=" list-paddingleft-2">
+<li>
+<p>(1) 添加10用户user1-user10；密码同用户名；</p>
+</li>
+<li>
+<p>(2) 用户不存在时才添加；存在时则跳过；</p>
+</li>
+<li>
+<p>(3) 最后显示本次共添加了多少用户；</p>
+</li>
+</ul>
+<pre>#!/bin/bash
+#
+declare&nbsp;-i&nbsp;sum=0
+for&nbsp;i&nbsp;in&nbsp;{1..10};do
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id&nbsp;user$i&nbsp;&amp;&gt;&nbsp;/dev/null&nbsp;&amp;&amp;&nbsp;continue&nbsp;||&nbsp;useradd&nbsp;user$i&nbsp;&amp;&amp;&nbsp;echo&nbsp;&quot;user$i&quot;&nbsp;|&nbsp;passwd&nbsp;--stdin&nbsp;$user$i
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum+=1
+done
+echo&nbsp;&quot;$sum&nbsp;users&nbsp;were&nbsp;added&nbsp;this&nbsp;time.&quot;</pre>
+<h2>Q17：写一脚本，用ping命令测试172.16.250.20-172.16.250.100以内有哪些主机在线，将在线的显示出来；</h2>
+<pre>#!/bin/bash
+#
+trap&nbsp;&#039;exit&nbsp;1&#039;&nbsp;INT
+
+for&nbsp;((i=20;i&lt;=100;i++));do
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;ping&nbsp;172.16.250.$i&nbsp;-c&nbsp;1&nbsp;-W&nbsp;1&nbsp;&amp;&gt;&nbsp;/dev/null;then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;-e&nbsp;&quot;172.16.250.$i&nbsp;is&nbsp;up!&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;fi
+done</pre>
+<h2>Q18：打印九九乘法表；</h2>
+<pre>#!/bin/bash
+#
+for&nbsp;j&nbsp;in&nbsp;{1..9};&nbsp;do
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;i&nbsp;in&nbsp;$(seq&nbsp;1&nbsp;$j);&nbsp;do
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;-n&nbsp;-e&nbsp;&quot;${i}X${j}=$[${i}*${j}]\t&quot;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;done
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;
+done</pre>
+<p></p>
+<p>转载请注明：<a href="http://www.178linux.com">linux运维部落</a> &raquo; <a href="http://www.178linux.com/64663">计算机网络知识，脚本编程_第八周练习</a></p>		</article>
+
+		
+		<footer class="article-footer">
+			<div class="article-tags">继续浏览有关 <a href="http://www.178linux.com/tag/%e8%84%9a%e6%9c%ac%e7%bc%96%e7%a8%8b" rel="tag">脚本编程</a><a href="http://www.178linux.com/tag/%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9c%e7%9f%a5%e8%af%86" rel="tag">计算机网络知识</a> 的文章</div>			<div class="share"><h5>分享到 </h5><div class="bdsharebuttonbox"><a class="bds_qzone" data-cmd="qzone"></a><a class="bds_tsina" data-cmd="tsina"></a><a class="bds_weixin" data-cmd="weixin"></a><a class="bds_tqq" data-cmd="tqq"></a><a class="bds_sqq" data-cmd="sqq"></a><a class="bds_renren" data-cmd="renren"></a><a class="bds_t163" data-cmd="t163"></a><a class="bds_tsohu" data-cmd="tsohu"></a><a class="bds_baidu" data-cmd="baidu"></a><a class="bds_douban" data-cmd="douban"></a><a class="bds_bdhome" data-cmd="bdhome"></a><a class="bds_youdao" data-cmd="youdao"></a><a class="bds_fbook" data-cmd="fbook"></a><a class="bds_twi" data-cmd="twi"></a><a class="bds_more" data-cmd="more"></a><a class="bds_count" data-cmd="count"></a></div></div>		</footer>
+
+		<nav class="article-nav">
+			<span class="article-nav-prev">上一篇 <a href="http://www.178linux.com/64653" rel="prev">第4周作业</a></span>
+			<span class="article-nav-next"><a href="http://www.178linux.com/64670" rel="next">第四周作业</a> 下一篇</span>
+		</nav>
+
+		<div class="relates">
+			<h3>与本文相关的文章</h3>
+			<ul>
+<li><a href="http://www.178linux.com/64689">选择判断专题脚本编程_第九周练习</a></li><li><a href="http://www.178linux.com/64601">磁盘分区，raid，lvm，脚本编程_第七周练习</a></li><li><a href="http://www.178linux.com/34372">Linux Shell基础脚本示例</a></li><li><a href="http://www.178linux.com/65063">LVS基本原理</a></li><li><a href="http://www.178linux.com/64855">Nginx 进阶 （ssl、fpm、rewrite、cache配置等）</a></li><li><a href="http://www.178linux.com/63935">Linux系统中常用网络管理方法</a></li><li><a href="http://www.178linux.com/64630">正则表达式应用</a></li><li><a href="http://www.178linux.com/64614">Week9&#8217;s homework</a></li><li><a href="http://www.178linux.com/64606">RAID概述</a></li><li><a href="http://www.178linux.com/64591">Nginx 基础 （IO模型、编译安装、几大块配置文件详解）</a></li><li><a href="http://www.178linux.com/64327">脚本</a></li><li><a href="http://www.178linux.com/64554">bash脚本编程之算术运算和文件查找</a></li><li><a href="http://www.178linux.com/64548">RAID</a></li><li><a href="http://www.178linux.com/64546">bash编程基础（二）补</a></li><li><a href="http://www.178linux.com/64543">vim编辑器和bash算术入门</a></li><li><a href="http://www.178linux.com/64539">vim编辑器</a></li><li><a href="http://www.178linux.com/64536">grep与文本处理工具</a></li><li><a href="http://www.178linux.com/64525">bash变量和逻辑运行</a></li><li><a href="http://www.178linux.com/64448">权限管理</a></li><li><a href="http://www.178linux.com/64446">用户和组管理的命令</a></li><li><a href="http://www.178linux.com/64444">Linux用户和组的基础概念</a></li><li><a href="http://www.178linux.com/64441">glob及IO重定向</a></li><li><a href="http://www.178linux.com/64438">文件管理命令及变量基础</a></li><li><a href="http://www.178linux.com/64431">第九周练习</a></li></ul>		</div>
+	
+
+		
+		<div id="respond" class="no_webshot">
+		<form action="http://www.178linux.com/wp-comments-post.php" method="post" id="commentform">
+		
+		<div class="comt-title">
+			<div class="comt-avatar pull-left">
+				<img alt='' src='http://gravatar.duoshuo.com/avatar/?s=28&#038;d=http%3A%2F%2Fwww.178linux.com%2Fwp-content%2Fthemes%2Fd8-4.0%2Fimg%2Fdefault.png&#038;r=g' srcset='http://gravatar.duoshuo.com/avatar/?s=56&amp;d=http%3A%2F%2Fwww.178linux.com%2Fwp-content%2Fthemes%2Fd8-4.0%2Fimg%2Fdefault.png&amp;r=g 2x' class='avatar avatar-28 photo avatar-default' height='28' width='28' />			</div>
+			<div class="comt-author pull-left">
+			发表我的评论			</div>
+			<a id="cancel-comment-reply-link" class="pull-right" href="javascript:;">取消评论</a>
+		</div>
+		
+		<div class="comt">
+			<div class="comt-box">
+				<textarea placeholder="写点什么..." class="input-block-level comt-area" name="comment" id="comment" cols="100%" rows="3" tabindex="1" onkeydown="if(event.ctrlKey&amp;&amp;event.keyCode==13){document.getElementById('submit').click();return false};"></textarea>
+				<div class="comt-ctrl">
+					<button class="btn btn-primary pull-right" type="submit" name="submit" id="submit" tabindex="5"><i class="icon-ok-circle icon-white icon12"></i> 提交评论</button>
+					<div class="comt-tips pull-right"><input type='hidden' name='comment_post_ID' value='64663' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="b1e76c900e" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="189"/></p></div>
+					<span data-type="comment-insert-smilie" class="muted comt-smilie"><i class="icon-thumbs-up icon12"></i> 表情</span>
+					<span class="muted comt-mailme"><label for="comment_mail_notify" class="checkbox inline" style="padding-top:0"><input type="checkbox" name="comment_mail_notify" id="comment_mail_notify" value="comment_mail_notify" checked="checked"/>有人回复时邮件通知我</label></span>
+				</div>
+			</div>
+
+												<div class="comt-comterinfo" id="comment-author-info" >
+						<h4>Hi，您需要填写昵称和邮箱！</h4>
+						<ul>
+							<li class="form-inline"><label class="hide" for="author">昵称</label><input class="ipt" type="text" name="author" id="author" value="" tabindex="2" placeholder="昵称"><span class="help-inline">昵称 (必填)</span></li>
+							<li class="form-inline"><label class="hide" for="email">邮箱</label><input class="ipt" type="text" name="email" id="email" value="" tabindex="3" placeholder="邮箱"><span class="help-inline">邮箱 (必填)</span></li>
+							<li class="form-inline"><label class="hide" for="url">网址</label><input class="ipt" type="text" name="url" id="url" value="" tabindex="4" placeholder="网址"><span class="help-inline">网址</span></li>
+						</ul>
+					</div>
+									</div>
+
+		
+	</form>
+	</div>
+
+		
+	</div>
+</div>
+<aside class="sidebar">	
+Ansible中文权威群-2号群
+<br>
+<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=72aaea3658c11875339b0f26d8af772875772acc4600865f53dc805166e9b43a"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Ansible中文权威-2号群" title="Ansible中文权威-2号群"></a>
+<br>
+ELK企业架构群
+<br>
+<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=063c723f70c77b548f065e769cb5ea9b16e8d8e8dadf5763d58f7dcb096695c6"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="ELK企业架构群" title="ELK企业架构群"></a>
+<br>
+AWK&amp;SED企业实战群
+<br>
+<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=28a633ed53538b0d570f4dc074a7bf8ec6448a8454b805bdb6f33c010f1bda5b"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="AWK&amp;SED企业实战" title="AWK&amp;SED企业实战"></a>
+<br>
+docker企业架构实践群
+<br>
+<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=cdedb9b2618192fdc0310a8ee35140bda392247251caa0253a84cfc61c3f2839"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="docker企业架构实践" title="docker企业架构实践"></a>
+<br>
+Docker企业架构实践2号群
+<br>
+<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=bb716b6898297696aaedc8cd0a6a9c93fb8fbb14abc984a9d9935eaedf20dfbc"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Docker企业架构实践2" title="Docker企业架构实践2"></a>
+<br>
+Jumpserver 交流群2
+<br>
+<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=733e29b61fabc4e332504808ef3f236fc9ab3fb6bbf424ba524a01406ae35c21"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Jumpserver 交流群2" title="Jumpserver 交流群2"></a>
+</br>
+
+
+
+<div class="widget d_textbanner"><a class="style04" href="http://jq.qq.com/?_wv=1027&k=Yph7JP"><strong></strong><h2>有奖征稿</h2><p>致力打造最专业的linux运维博客教程平台,欢迎各位投稿，对于录用的精品博文，将有给力的奖励和内部工会机会推荐。
+官方运营群: 372011984</p></a></div><div class="widget d_textbanner"><a class="style01" href="http://www.magedu.com" target="_blank"><strong></strong><h2>马哥2016Linux运维、Python自动化全新实战班震撼上线</h2><p>马哥全新 2016Python3.0 实战班震撼来袭,准备了大量
+一线生产环境最实用的案例如:大众点评、饿了么、腾讯、
+陆金所、唯品会等真实项目。我们教师团队全部是 5 年以
+上的资深运维出身,更懂运维的痛点和核心需求。课程全
+部以手把手式带领大家学习,项目是从 0 开始,一步步跟
+着做,绝不像其他机构,讲一些看似高大上其实没太大实
+用价值的内容。我们所有实战内容,都是在亿级别 PV 的一
+线互联网公司多年生产环境得到验证的项目。独家课程首 次呈现,干货满满不容错过!本次课程首次推出,主要以
+感恩回馈老学员为主,跳楼价上市!(本期价格5680，下期恢复原价,可与其他机构对比课程性价比)</p></a></div><div class="widget d_postlist"><h3 class="widget_tit">文章最热</h3><ul class="nopic"><li><a href="http://www.178linux.com/61385"><span class="text">计算机浅谈及Linux简谈</span><span class="muted">2016-11-29</span><span class="muted">4评论</span></a></li>
+<li><a href="http://www.178linux.com/61307"><span class="text">第一周-Linux Basic</span><span class="muted">2016-11-28</span><span class="muted">3评论</span></a></li>
+<li><a href="http://www.178linux.com/60248"><span class="text">N24期第四周作业</span><span class="muted">2016-11-22</span><span class="muted">2评论</span></a></li>
+<li><a href="http://www.178linux.com/60695"><span class="text">Centos6系统救援模式</span><span class="muted">2016-11-24</span><span class="muted">2评论</span></a></li>
+<li><a href="http://www.178linux.com/60772"><span class="text">第三周作业</span><span class="muted">2016-11-25</span><span class="muted">2评论</span></a></li>
+</ul></div><div class="widget widget_categories"><h3 class="widget_tit">文章分类</h3>		<ul>
+	<li class="cat-item cat-item-2372"><a href="http://www.178linux.com/%e7%bd%91%e7%bb%9c24%e6%9c%9f" >网络24期</a> (398)
+</li>
+	<li class="cat-item cat-item-2373"><a href="http://www.178linux.com/%e7%bd%91%e7%bb%9c25%e6%9c%9f" >网络25期</a> (186)
+</li>
+	<li class="cat-item cat-item-2374"><a href="http://www.178linux.com/%e7%bd%91%e7%bb%9c26%e6%9c%9f" >网络26期</a> (16)
+</li>
+	<li class="cat-item cat-item-3"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f" >运维专栏</a> (2,875)
+</li>
+	<li class="cat-item cat-item-4"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/devopsadmin/devops-other" >其它</a> (8)
+</li>
+	<li class="cat-item cat-item-5"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/cloud" >云计算</a> (7)
+</li>
+	<li class="cat-item cat-item-7"><a href="http://www.178linux.com/more/devs" >开发专栏</a> (90)
+</li>
+	<li class="cat-item cat-item-12"><a href="http://www.178linux.com/more/devs/ios" >IOS</a> (1)
+</li>
+	<li class="cat-item cat-item-41"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/dbadmin/mysql" >MYSQL</a> (56)
+</li>
+	<li class="cat-item cat-item-46"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/itperson" >IT生活</a> (75)
+</li>
+	<li class="cat-item cat-item-48"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/networkadmin/network" >网络</a> (21)
+</li>
+	<li class="cat-item cat-item-50"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/bigdataadmin/bigdata-other" >其它</a> (11)
+</li>
+	<li class="cat-item cat-item-52"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/automatic/ansible" >ansible</a> (10)
+</li>
+	<li class="cat-item cat-item-232"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/monitoradmin/monitor-other" >其它</a> (5)
+</li>
+	<li class="cat-item cat-item-336"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/virtual/openstack" >openstack</a> (5)
+</li>
+	<li class="cat-item cat-item-353"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/safeadmin/iptables" >iptables</a> (2)
+</li>
+	<li class="cat-item cat-item-1252"><a href="http://www.178linux.com/www-178linux-com/ansible%e4%b8%ad%e6%96%87%e6%9d%83%e5%a8%81" >ansible</a> (4)
+</li>
+	<li class="cat-item cat-item-6"><a href="http://www.178linux.com/jobbers" >职位推荐</a> (92)
+</li>
+	<li class="cat-item cat-item-9"><a href="http://www.178linux.com/more/studentlife" >学员风采</a> (15)
+</li>
+	<li class="cat-item cat-item-13"><a href="http://www.178linux.com/more/devs/andriod" >Andriod</a> (1)
+</li>
+	<li class="cat-item cat-item-18"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/devopsadmin/ruby" >RUBY</a> (3)
+</li>
+	<li class="cat-item cat-item-23"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/virtual" >虚拟化</a> (7)
+</li>
+	<li class="cat-item cat-item-42"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/dbadmin/nosql" >NOSQL</a> (27)
+</li>
+	<li class="cat-item cat-item-329"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin" >系统运维</a> (839)
+</li>
+	<li class="cat-item cat-item-337"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/virtual/xen" >xen</a> (1)
+</li>
+	<li class="cat-item cat-item-340"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/monitoradmin/zabbix" >zabbix</a> (8)
+</li>
+	<li class="cat-item cat-item-343"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/bigdataadmin/hive" >hive</a> (13)
+</li>
+	<li class="cat-item cat-item-349"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/networkadmin/coolber" >coolber</a> (3)
+</li>
+	<li class="cat-item cat-item-354"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/safeadmin/ldap" >ldap</a> (2)
+</li>
+	<li class="cat-item cat-item-8"><a href="http://www.178linux.com/more" >更多</a> (7)
+</li>
+	<li class="cat-item cat-item-11"><a href="http://www.178linux.com/more/ts" >师资力量</a> (14)
+</li>
+	<li class="cat-item cat-item-14"><a href="http://www.178linux.com/more/devs/java" >JAVA</a> (29)
+</li>
+	<li class="cat-item cat-item-39"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/linux" >LINUX</a> (895)
+</li>
+	<li class="cat-item cat-item-44"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/devopsadmin/python" >Python</a> (23)
+</li>
+	<li class="cat-item cat-item-54"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/automatic/itlife-other" >其它</a> (5)
+</li>
+	<li class="cat-item cat-item-330"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/monitoradmin" >监控运维</a> (13)
+</li>
+	<li class="cat-item cat-item-338"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/virtual/hypervisor" >hypervisor</a> (1)
+</li>
+	<li class="cat-item cat-item-344"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/bigdataadmin/storm" >storm</a> (5)
+</li>
+	<li class="cat-item cat-item-350"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/networkadmin/pxe" >pxe</a> (4)
+</li>
+	<li class="cat-item cat-item-352"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/dbadmin/mariadb" >mariadb</a> (10)
+</li>
+	<li class="cat-item cat-item-15"><a href="http://www.178linux.com/more/devs/cc" >C/C++</a> (17)
+</li>
+	<li class="cat-item cat-item-40"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/unix" >UNIX</a> (116)
+</li>
+	<li class="cat-item cat-item-45"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/devopsadmin/django" >Django</a> (2)
+</li>
+	<li class="cat-item cat-item-55"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/automatic/puppet" >puppet</a> (7)
+</li>
+	<li class="cat-item cat-item-331"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/bigdataadmin" >大数据运维</a> (25)
+</li>
+	<li class="cat-item cat-item-339"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/virtual/exsi" >exsi</a> (2)
+</li>
+	<li class="cat-item cat-item-345"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/bigdataadmin/hadoop" >hadoop</a> (14)
+</li>
+	<li class="cat-item cat-item-351"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/networkadmin/kickstart" >kickstart</a> (3)
+</li>
+	<li class="cat-item cat-item-1250"><a href="http://www.178linux.com/qa%e9%97%ae%e7%ad%94" >qa问答</a> (3)
+</li>
+	<li class="cat-item cat-item-16"><a href="http://www.178linux.com/more/devs/php" >PHP</a> (26)
+</li>
+	<li class="cat-item cat-item-47"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/webadmin" >Web类</a> (291)
+</li>
+	<li class="cat-item cat-item-332"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/devopsadmin" >开发运维</a> (17)
+</li>
+	<li class="cat-item cat-item-346"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/bigdataadmin/spark" >spark</a> (2)
+</li>
+	<li class="cat-item cat-item-355"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/virtual/kvm" >kvm</a> (3)
+</li>
+	<li class="cat-item cat-item-1251"><a href="http://www.178linux.com/www-178linux-com" >magedu</a> (41)
+</li>
+	<li class="cat-item cat-item-49"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/middleware" >中间件</a> (18)
+</li>
+	<li class="cat-item cat-item-333"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/networkadmin" >网络运维</a> (20)
+</li>
+	<li class="cat-item cat-item-1793"><a href="http://www.178linux.com/%e8%af%95%e9%a2%98" >试题</a> (6)
+</li>
+	<li class="cat-item cat-item-51"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/automatic" >自动化</a> (43)
+</li>
+	<li class="cat-item cat-item-334"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/dbadmin" >数据库运维</a> (21)
+</li>
+	<li class="cat-item cat-item-166"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/systemadmin/windows" >Windows</a> (26)
+</li>
+	<li class="cat-item cat-item-335"><a href="http://www.178linux.com/%e8%bf%90%e7%bb%b4%e4%b8%93%e6%a0%8f/safeadmin" >安全运维</a> (14)
+</li>
+	<li class="cat-item cat-item-1961"><a href="http://www.178linux.com/m19" >面授19期</a> (2)
+</li>
+	<li class="cat-item cat-item-1962"><a href="http://www.178linux.com/m20" >面授20期</a> (2,069)
+</li>
+	<li class="cat-item cat-item-1963"><a href="http://www.178linux.com/m21" >面授21期</a> (321)
+</li>
+	<li class="cat-item cat-item-1964"><a href="http://www.178linux.com/m22" >面授22期</a> (9)
+</li>
+	<li class="cat-item cat-item-1965"><a href="http://www.178linux.com/m23" >面授23期</a> (1)
+</li>
+	<li class="cat-item cat-item-1966"><a href="http://www.178linux.com/n18" >网络18期</a> (1)
+</li>
+	<li class="cat-item cat-item-1967"><a href="http://www.178linux.com/n19" >网络19期</a> (16)
+</li>
+	<li class="cat-item cat-item-1968"><a href="http://www.178linux.com/n20" >网络20期</a> (57)
+</li>
+	<li class="cat-item cat-item-1969"><a href="http://www.178linux.com/n21" >网络21期</a> (283)
+</li>
+	<li class="cat-item cat-item-1970"><a href="http://www.178linux.com/n22" >网络22期</a> (296)
+</li>
+	<li class="cat-item cat-item-2260"><a href="http://www.178linux.com/n23" >网络23期</a> (161)
+</li>
+	<li class="cat-item cat-item-2049"><a href="http://www.178linux.com/%e6%96%87%e6%9c%ac%e5%a4%84%e7%90%86%e5%b7%a5%e5%85%b7" >文本处理工具</a> (10)
+</li>
+		</ul>
+</div><div class="widget widget_archive"><h3 class="widget_tit">文章归档</h3>		<ul>
+			<li><a href='http://www.178linux.com/date/2016/12'>2016年十二月</a></li>
+	<li><a href='http://www.178linux.com/date/2016/11'>2016年十一月</a></li>
+	<li><a href='http://www.178linux.com/date/2016/10'>2016年十月</a></li>
+	<li><a href='http://www.178linux.com/date/2016/09'>2016年九月</a></li>
+	<li><a href='http://www.178linux.com/date/2016/08'>2016年八月</a></li>
+	<li><a href='http://www.178linux.com/date/2016/07'>2016年七月</a></li>
+	<li><a href='http://www.178linux.com/date/2016/06'>2016年六月</a></li>
+	<li><a href='http://www.178linux.com/date/2016/05'>2016年五月</a></li>
+	<li><a href='http://www.178linux.com/date/2016/04'>2016年四月</a></li>
+	<li><a href='http://www.178linux.com/date/2016/03'>2016年三月</a></li>
+	<li><a href='http://www.178linux.com/date/2016/02'>2016年二月</a></li>
+	<li><a href='http://www.178linux.com/date/2016/01'>2016年一月</a></li>
+	<li><a href='http://www.178linux.com/date/2015/12'>2015年十二月</a></li>
+	<li><a href='http://www.178linux.com/date/2015/11'>2015年十一月</a></li>
+	<li><a href='http://www.178linux.com/date/2015/10'>2015年十月</a></li>
+	<li><a href='http://www.178linux.com/date/2015/09'>2015年九月</a></li>
+	<li><a href='http://www.178linux.com/date/2015/08'>2015年八月</a></li>
+	<li><a href='http://www.178linux.com/date/2015/07'>2015年七月</a></li>
+	<li><a href='http://www.178linux.com/date/2015/06'>2015年六月</a></li>
+	<li><a href='http://www.178linux.com/date/2015/05'>2015年五月</a></li>
+	<li><a href='http://www.178linux.com/date/2015/04'>2015年四月</a></li>
+	<li><a href='http://www.178linux.com/date/2015/03'>2015年三月</a></li>
+	<li><a href='http://www.178linux.com/date/2015/02'>2015年二月</a></li>
+		</ul>
+		</div><div class="widget widget_meta"><h3 class="widget_tit">Login</h3>			<ul>
+			<li><a href="http://www.178linux.com/wp-login.php?action=register">注册</a></li>			<li><a href="http://www.178linux.com/wp-login.php">登录</a></li>
+			<li><a href="http://www.178linux.com/feed">文章<abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="http://www.178linux.com/comments/feed">评论<abbr title="Really Simple Syndication">RSS</abbr></a></li>
+			<li><a href="https://cn.wordpress.org/" title="基于WordPress，一个优美、先进的个人信息发布平台。">WordPress.org</a></li>			</ul>
+			</div>
+</aside>
+
+
+<script>var online= new Array();</script><script src="http://webpresence.qq.com/getonline?Type=1&453013021:2481066361:"></script><!-- QQ客服代码开始--><link rel="stylesheet" href="http://www.178linux.com/wp-content/plugins/qq-kefu/qqkefu.css" type="text/css" media="screen" /><script>
+
+	if (typeof jQuery == "undefined") {
+
+		var script = document.createElement("script");
+
+		script.setAttribute("src",
+
+				"http://lib.sinaapp.com/js/jquery/1.7.2/jquery.min.js");
+
+		document.getElementsByTagName("BODY")[0].appendChild(script);
+
+	}
+
+</script><div id="divStayTopright" style="position:fixed;z-index:999999;top:13%;right:0px;height:16px;"><div id="qqkefuDv" style="right:-87px;position:fixed;"><script>var isIn = true;var isLeft="right";</script><table><tr><td id="navLog"><img src="http://www.178linux.com/wp-content/plugins/qq-kefu/images/navLogo.gif" id="imgNav"></td><td><table id="__01" width="83" style="min-width:83px" border="0" cellpadding="0" cellspacing="0"><tr><td><div class="kefu1"></div></td></tr><tr><td><div class="kefu3"></div></td></tr><tr><td><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=453013021&site=qq&menu=yes"><div class="kefu4" id="qqIco0"> <script>if(online[0]==0){jQuery("#qqIco0").addClass("kefu4gray")}</script></div></a></td></tr><tr><td><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=453013021&site=qq&menu=yes"><div class="qqnum">MonitorA</div></a></td></tr><tr><td><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2481066361&site=qq&menu=yes"><div class="kefu4" id="qqIco1"> <script>if(online[1]==0){jQuery("#qqIco1").addClass("kefu4gray")}</script></div></a></td></tr><tr><td><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2481066361&site=qq&menu=yes"><div class="qqnum">MonitorB</div></a></td></tr><tr><td><div class="line"></div></td></tr><tr><td><a href="http://www.0797seo.net/" target="_blank"><div class="kefu10"></div></a></td></tr></table></td></tr></table></div></div><script>window.document.getElementById("txtTelNo").onclick=function(){window.prompt("客服电话","")}</script><script src="http://www.178linux.com/wp-content/plugins/qq-kefu/qqkefuFront.js"></script><!-- QQ客服代码结束--></section>
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="copyright pull-left">
+        <a href="http://www.miitbeian.gov.cn/" rel="external nofollow" target="_blank">
+        京ICP备16064699号-1        </a>
+        </div>
+        
+        <div class="copyright pull-left">
+            版权所有，保留一切权利！ &copy; 2016 <a href="http://www.178linux.com">linux运维部落</a>　Theme <a href="http://www.daqianduan.com/" target="_blank">D8</a>
+        </div>
+        <div class="trackcode pull-right">
+            <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?1dc880b86481241a5eca66d1d10692bf";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript">SyntaxHighlighter.all();</script><script type='text/javascript' src='http://www.178linux.com/wp-content/plugins/akismet/_inc/form.js?ver=3.1.10'></script>
+<script type='text/javascript' src='http://www.178linux.com/wp-content/themes/d8-4.0/js/jquery.js?ver=3.0'></script>
+<script type='text/javascript' src='http://www.178linux.com/wp-includes/js/wp-embed.min.js?ver=4.4.2'></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?eac5380e9f247d9c36ef314eccd116de";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?9b834ccb077ff4a957d9f0e1035a1d4d";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</body>
+</html>
+
+
+<!-- Dynamic page generated in 0.711 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2016-12-28 15:42:52 -->
+
+<!-- super cache -->

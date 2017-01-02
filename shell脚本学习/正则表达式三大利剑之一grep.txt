@@ -1,0 +1,101 @@
+grep:Global search regular expression and print out the line文本过滤工具
+grep [options] PATTERN [file...]
+--color=auto	#对匹配到的文本着色
+-v	#显示不被pattern匹配的行
+-i	#忽略大小写
+-n	#显示匹配的行号
+-c	#统计匹配的行数
+-o	#仅仅显示匹配到的字符串
+-l	#只输出匹配到的文件名称
+-q	#静默模式，不输出任何模式
+-A#	#当前行以及之后的#行一并显示
+-B#	#当前行以及之前的#行一并显示
+-C#	#当前行以及前后的#行一并显示
+-E	#实现多个选择间的逻辑或关系，如：grep -E 'ha|hei' file
+
+grep的PATTERN支持正则表达式，正则表达式有基本正则表达式(BRE)和扩展的正则表达式(ERE)，
+元字符分类则有四种:字符匹配、匹配次数、位置锚定和分组
+字符匹配：.			#匹配任意单个字符
+		  []		#匹配指定范围内的任意单个字符
+		  [^]		#匹配指定范围外的任意单个字符
+		  [:alnum:]	#匹配字母和数字
+		  [:alpha:]	#匹配英文字母
+		  [:lower:]/[:upper:]	#匹配大/小写字母
+		  [:blank:]/[:space:]	#匹配空格和制表符/垂直和水平的空白字符
+		  [:digit:]	#匹配十进制数字
+匹配次数：*		#匹配前面的字符任意次
+		  .*	#匹配任意长度的任意字符
+		  \？	#匹配前面的字符0或1次
+		  \+	#匹配前面的字符至少一次
+		  \{n\}	#匹配前面的字符n次及以上
+位置锚定：^	#锚定行首
+		  $	#锚定行尾
+		  ^pattern			#用于模式匹配整行，例："^$"空行、"^[[:space:]]*$"空白行
+		  \<,\b				#词尾锚定，匹配连续字符串的第一个字母
+		  \>,\b				#词首锚定，匹配连续字符串的最后一个字母
+		  \<pattern\>		#匹配整个单词
+分组：\(\)	#将一个或多个字符捆绑当做一个整体，例：\(root\)+ 分组括号中的模式匹配到的内容会被正则表达式引擎记录与内部的变量中，这些变量的命名方式是：\1、\2、\3....
+	  \1	#表示从坐起第一个括号以及与之匹配的右括号之间的模式所匹配到的字符，
+			例：\(string1\+\(string2\)*\)则\1表示string1\+\(string2\)*，\2表示string2
+	  后向引用：引用前面的分组括号中的模式所匹配字符，而非模式本省
+egrep = grep -E 
+
+grep "^[[:space:]]\+[^[:space:]] /etc/grub.conf			#找出文件中以若干空格开头且其后跟若干字符串的行		  
+grep -v "^[[:space:]]*$" /etc/passwd					#找出文件中非空白行以及非空白字符的行
+egrep "(^\<[^:]*\>).*\1$" /etc/passwd  					#找出passwd下开头和结尾相同内容的行，(^\<[^:]*\>)表示一个字符串但是不包含":"的字符串
+egrep "^([^:]+\>).*\1$"	/etc/passwd						#找出passwd下开头和结尾相同的内容的行
+grep -oE "[[:alnum:]]+\(\)" /etc/rc.d/init.d/functions 	#找出字符串后跟括号的内容
+echo /usr/ChangesFancyStyle.css|grep -Eo "[^/]+/?$"		#找出输出字符串中的基名
+find /var/ -user root -group mail						#查找/var/路径下属主root属组mail的文件
+find /var/ -nouser -nogroup -atime -3					#查找/var/目录下没有属主和属组的且最近三天访问的文件
+stat `find /var -nouser -nogroup -atime -3`				#输出详细的文件信息（stat）
+find /etc/ -type f -size +1M|xargs -i{} ls -lh {}		#查找/etc/目录下是普通文件且大小大于1M的文件
+find /usr ! \( -user root -o -user stu \)				#查找/usr目录下属主不是root和stu的文件
+find /etc/ -atime -7 ! \( -user root -o -user stu \)	#查找/etc/目录下最近七天访问且属主不是root和stu的文件
+grep "^#[[:space:]]\+[^[:space:]]\+“ /etc/passwd		#查找以#开头且中间有若干空格且之后是非空格字符
+cut -d: -f7 /etc/passwd|uniq -c|sort -nr|head -1		#显示当前系统上默认shell最多的shell
+sort -n -t":" -k3 /etc/passwd|tail|tr 'a-z' 'A-Z'		#显示/etc/passwd中的以":"为分隔符第三个字段数字TOP10并且将小写转换为大写
+find /etc/ -type f -name *.conf|grep -Eo "[^/]+\?$"		#显示etc目录下所有已.conf结尾的文件名
+sort -n -k 3 -t: /etc/group|head -n 10|cut -d: -f1		#显示/etc/group文件中第三个字段数值最小的10个组的名字
+usermod -s /bin/tcsh stu		#修改stu用户的默认shell为tcsh
+echo "1234"|passwd  --stdin stu1 && chage -m 3 -M 180 -W 3 stu1			#修改stu1用户的密码，并且设置最短使用期限为3天，最常使用期限是180天，警告是3天
+grep -l 'user' /etc/*		#查找/etc/路径下的文件含有“user”关键字的文件名		
+egrep -o  "\<[[:alnum:]_\-]+\.?[[:alnum:]]+@([[:alnum:]_\-]+\.)+(com|cn|edu|org|net|gov)\.?\>"
+
+
+使用echo命令输出一个绝对路径，使用grep取出其基名；
+echo /etc/rc.d/init.d/functions/ | grep -E -o "[^/]+/?$"|grep -o ".*[^/]"
+echo /etc/rc.d/init.d/functions  | grep -E -o "[^/]+/?$"|grep -o ".*[^/]"
+扩展：取出其路径名
+echo /etc/rc.d/init.d/functions/ | grep -E -o "/.*[^/]"|grep -Eo "/.*/"|grep -Eo "/.*[^/]"
+echo /etc/rc.d/init.d/functions  | grep -E -o "/.*[^/]"|grep -Eo "/.*/"|grep -Eo "/.*[^/]"	
+
+
+file=/dir1/dir2/dir3/my.file.txt
+我们可以用 ${ } 分别替换获得不同的值：
+${file#*/}：拿掉第一条 / 及其左边的字符串：dir1/dir2/dir3/my.file.txt
+${file##*/}：拿掉最后一条 / 及其左边的字符串：my.file.txt
+${file#*.}：拿掉第一个 . 及其左边的字符串：file.txt
+${file##*.}：拿掉最后一个 . 及其左边的字符串：txt
+${file%/*}：拿掉最后条 / 及其右边的字符串：/dir1/dir2/dir3
+${file%%/*}：拿掉第一条 / 及其右边的字符串：(空值)
+${file%.*}：拿掉最后一个 . 及其右边的字符串：/dir1/dir2/dir3/my.file
+${file%%.*}：拿掉第一个 . 及其右边的字符串：/dir1/dir2/dir3/my
+${file:0:5}：提取最左边的 5 个字节：/dir1
+${file:5:5}：提取第 5 个字节右边的连续 5 个字节：/dir2
+${file/dir/path}：将第一个 dir 提换为 path：/path1/dir2/dir3/my.file.txt
+${file//dir/path}：将全部 dir 提换为 path：/path1/path2/path3/my.file.txt
+${file-my.file.txt} ：假如 $file 没有设定，则使用 my.file.txt 作传回值。(空值及非空值时不作处理)
+${file:-my.file.txt} ：假如 $file 没有设定或为空值，则使用 my.file.txt 作传回值。 (非空值时不作处理)
+${file+my.file.txt} ：假如 $file 设为空值或非空值，均使用 my.file.txt 作传回值。(没设定时不作处理)
+${file:+my.file.txt} ：若 $file 为非空值，则使用 my.file.txt 作传回值。 (没设定及空值时不作处理)
+${file=my.file.txt} ：若 $file 没设定，则使用 my.file.txt 作传回值，同时将 $file 赋值为 my.file.txt 。 (空值及非空值时不作处理)
+${file:=my.file.txt} ：若 $file 没设定或为空值，则使用 my.file.txt 作传回值，同时将 $file 赋值为 my.file.txt 。 (非空值时不作处理)
+${file?my.file.txt} ：若 $file 没设定，则将 my.file.txt 输出至 STDERR。 (空值及非空值时不作处理)
+${file:?my.file.txt} ：若 $file 没设定或为空值，则将 my.file.txt 输出至 STDERR。 (非空值时不作处理)
+${#file} 可得到 27 ，因为 /dir1/dir2/dir3/my.file.txt 刚好是 27 个字节...
+记忆的方法为：
+#是去掉左边(在鉴盘上 # 在 $ 之左边)
+%是去掉右边(在鉴盘上 % 在 $ 之右边)
+单一符号是最小匹配﹔两个符号是最大匹配。
+tips: 以上的理解在于, 你一定要分清楚 unset 与 null 及 non-null 这三种赋值状态。一般而言, : 与 null 有关, 若不带 : 的话, null 不受影响, 若带 : 则连 null 也受影响。			

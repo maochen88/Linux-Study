@@ -1,0 +1,11 @@
+使用fdisk非交互分区方法：
+1. 创建一个分区文件如下, 输入交互式分区按顺序的命令
+    [root@node1 ~]# cat sdb
+        n
+        p
+        1
+        1
+        10G
+        w
+2. 使用输入重定向, 如下即可完成
+    [root@node1 ~]# fdisk /dev/sdb < sdb

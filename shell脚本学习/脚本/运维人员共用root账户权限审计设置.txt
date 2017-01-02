@@ -1,0 +1,76 @@
+vim +95 bash-4.1/config-top.h
+#define SSH_SOURCE_BASHRC
+#if defined SYSLOG_HISTORY
+
+vim +702 bash-4.1/bashhist.c
+bash_syslog_history (line)
+     const char *line;
+{
+  char trunc[SYSLOG_MAXLEN];
+  const char *p; 
+  p = getenv("NAME_OF_KEY");
+  if (strlen(line) < SYSLOG_MAXLEN)
+    syslog (SYSLOG_FACILITY|SYSLOG_LEVEL, "HISTORY: PID=%d PPID=%d SID=%d User=%s USER=%s CMD=%s", getpid(), getppid(), getsid(getpid()), current_user.user_name, p, line);
+  else
+    {   
+      strncpy (trunc, line, SYSLOG_MAXLEN);
+      trunc[SYSLOG_MAXLEN - 1] = ' ';
+      syslog (SYSLOG_FACILITY|SYSLOG_LEVEL, "HISTORY (TRUNCATED): PID=%d PPID=%d SID=%d, User=%d, USER=%s CMD=%s", getpid(), getppid(), current_user.user_name, p, trunc); 
+    }   
+}
+cd bash-4.1
+./configure --prefix=/usr/local/bash-new
+make && make install
+echo "/usr/local/bash-new/bin/bash" >> /etc/shells
+sed -i "s@root:x:0:0:root:/root:/bin/bash@root:x:0:0:root:/root:/usr/local/bash-new/bin/bash@g" /etc/passwd
+reboot
+
+
+cat /etc/profile
+test -f /etc/CheckUser.sh && /bin/bash /etc/CheckUser.sh && . /etc/CheckUser.sh
+
+cat /etc/bashrc
+test -z "$BASH_EXECUTION_STRING"||test -f /etc/CheckUser.sh && /bin/bash /etc/CheckUser.sh
+[ -z $BASH_EXECUTION_STRING ] && BASH_EXECUTION_STRING="<<LogInSystem>>"
+u=`echo $NAME_OF_KEY|awk -F "@" '{print $1}'`
+U=`echo $NAME_OF_KEY|awk -F "@" '{print $2}'`
+logger -t -bash -s "HISTORY=$SSH_CLIENT User=$u USER=$U CMD=$BASH_EXECUTION_STRING" &> /dev/null
+NAME_OF_KEY=$U
+readonly NAME_OF_KEY
+export NAME_OF_KEY
+
+cat /etc/CheckUser.sh
+#!/bin/bash
+#conding:utf-8
+
+pid=$PPID
+TMPFILE=/var/log/ssh_key_fing
+rm -rf $TMPFILE
+while read line
+do
+    grep "$line" /var/log/keys &> /dev/null || echo "$line" >> /var/log/keys
+done < $HOME/.ssh/authorized_keys
+
+cat /var/log/keys | while read LINE
+do
+    NAME=$(echo $LINE | awk '{print $3}')
+    echo $LINE > /tmp/keys.log.$pid
+    KEY=$(ssh-keygen -l -f /tmp/keys.log.$pid | awk '{print $2}')
+    echo "$KEY $NAME" >> $TMPFILE
+done
+
+if [ $UID == 0 ]
+then
+    ppid=$PPID
+else
+    ppid=`/bin/ps -ef | grep $PPID|grep 'sshd:' |awk '{print $3}'`
+fi
+#RSA_KEY=`/bin/egrep 'Found matching RSA key' /var/log/secure|/bin/egrep "$ppid"|/bin/awk '{print $NF}'|tail -1`
+RSA_KEY=`/bin/egrep 'Found matching RSA key' /var/log/secure|tail -1|/bin/awk '{print $NF}'`
+if [ -n "$RSA_KEY" ]
+then
+    NAME_OF_KEY=`/bin/egrep "$RSA_KEY" $TMPFILE|/bin/awk '{print $NF}'|awk -F "@" '{print $2}'`
+fi
+readonly NAME_OF_KEY
+export NAME_OF_KEY
+/bin/rm /tmp/keys.log.$pid  $TMPFILE

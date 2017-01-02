@@ -1,0 +1,7 @@
+第一：制作iso镜像的方法：
+把/dev/cdrom目录制作为镜像，名字为/root/rh1.iso
+方法1：dd if=/dev/cdrom of=/root/rh1.iso
+方法2：#cat /dev/cdrom >/root/1.iso
+方法3：mkisofs -r -o myiso.iso /dev/cdrom
+方法4：cp -r /home/user name.iso
+生成iso镜像以后，就可以用linux下的DVD进行刻录，刻录为DVD光盘了

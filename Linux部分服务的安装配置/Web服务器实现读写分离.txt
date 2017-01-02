@@ -1,0 +1,11 @@
+规划：
+	Web Proxy Server1：192.168.138.33	(web代理服务器)
+	Web Server2:192.168.138.44  （上传文件服务器）
+	Web Server3:192.168.138.55	（阅读文件服务器）
+注：在Server2和Server3的Web根目录下实现文件同步
+	
+1、首先开启Server2的上传文件的功能：
+	/etc/httpd/conf/httpd.conf：
+	LoadModule dav_module modules/mod_dav.so（取消注释）
+	并在<Directory>栏目下添加启用dav模块：目的是添加上传功能
+	Dav		on

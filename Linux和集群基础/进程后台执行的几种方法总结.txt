@@ -1,0 +1,59 @@
+Linux技巧：进程在后台可靠运行的几种方法总结：nohup/setsid/&/disown/screen
+重点推荐：screen
+*、screen（有大量的命令需要在稳定的后台运行）
+   语法：screen	-dmS	SESSION_NAME	#建立一个处于断开模式下的会话，并指定会话名
+		 screen	-ls						#列出所有的会话
+		 screen	-r	SESSION_NAME		#重新连接指定名称的会话
+		 Ctrl+a d						#暂时断开当前的会话
+		 exit							#永久退出建立的会话
+		 Ctrl+a	t						#检查是否处于某个会话当中
+		 
+   示例：screen	-dmS	test			#建立一个断开模式下的名为test的伪终端
+		 screen	-ls						#查看当前终端下的所有伪终端列表
+		 screen	-r	test				#进入test这个伪终端内
+		 
+   说明：screen提供了一种终端模拟器，使得可以在一个真实终端下运行多个全屏的伪终端
+
+当用户注销(logout)或者网络中断时，终端会收到一个HUP(hangup)的信号从而关闭bash下所有子进程，因此解决的办法有两种：要么让进城忽略HUP信号，要么让进程运行在新的会话里从而不属于此终端的子进程
+
+1、nohup（程序忽略HUP信号）
+   语法：nohup	COMMAND	[>filename 2>&1 &] 
+				##将命令或者程序放在后端执行并且会忽略终端的HUP信号
+   示例：nohup	ping baidu.com	> outfile.txt 2>&1 &
+	##关闭终端后登陆终端任务仍在运行，删除的方法：ps -e|grep ping -->找到进程ID后-->kill PID
+
+2、setsid（使进程不在当前的bash进程之下运行）
+   语法：setsid		COMMAND
+   示例：setsid		ping baidu.com  &
+		 #将ping进程独立于当前bash进程之下，并放在后台运行
+   说明：通过pstree命令查看，COMMAND进程不在当前的bash进程之下运行，是独立与当前的bash环境。
+   
+3、&（利用小括号另开辟一个当前shell的shell环境，既不受HUP信号又不受终端关闭影响）
+   语法：(COMMAND	&)
+   示例：(ping	baidu.com	&> out.txt	&)
+   说明：将上述命令放在子shell环境中，并放在后台运行。
+   
+4、disown（将已经提交的作业实现不受终端的关闭影响）
+   语法：disown	-h	JOB		##使得某一个作业忽略HUP信号
+		 disown	-ah			##使得所有作业忽略HUP信号
+		 disown	-rh			##使得正在运行的作业忽略HUP信号
+技巧：如果并没有把当前命令作为作业来运行(即没有在命令后面加“&”)，CTRL-z可将当前进程挂起（Suspend），用jobs命令来查询作业号，再用bg %JOGID来将它放入后台并继续运行。然后采用disown -h %JOBID命令实现作业后台忽略HUP信号化
+	示例：ping	baidu.com &> out.txt	#提交的命令
+		  Ctrl+z						#将作业挂起Suspend
+		  jobs --->JOBID				#通过jobs查看作业号JOBID
+		  bg	%JOBID					#将作业推送到后台执行
+		  disown	-h  %JOBID			#将作业实现不受影响化
+		  
+5、screen（有大量的命令需要在稳定的后台运行）
+   语法：screen	-dmS	SESSION_NAME	#建立一个处于断开模式下的会话，并指定会话名
+		 screen	-ls						#列出所有的会话
+		 screen	-r	SESSION_NAME		#重新连接指定名称的会话
+		 Ctrl+a d						#暂时断开当前的会话
+		 exit							#永久退出建立的会话
+		 Ctrl+a	t						#检查是否处于某个会话当中
+		 
+   示例：screen	-dmS	test			#建立一个断开模式下的名为test的伪终端
+		 screen	-ls						#查看当前终端下的所有伪终端列表
+		 screen	-r	test				#进入test这个伪终端内
+		 
+   说明：screen提供了一种终端模拟器，使得可以在一个真实终端下运行多个全屏的伪终端

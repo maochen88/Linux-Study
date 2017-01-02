@@ -1,0 +1,66 @@
+1、配置时间：
+	echo "TZ='Asia/Shanghai'; export TZ" >> /etc/profile
+	source /etc/profile
+	如果还和当前时间不同，可手动调整：
+	hwclock --set --date="20161120221735"
+	hwclock systohc #强系统时间和硬件时间同步
+2、yum安装LAMP环境
+	sed -i 's/SELINUX=enforcing/SELINUC=disabled/g' /etc/selinux/conf
+	setenforce 0
+	chkconfig iptables off
+	service iptables stop
+	yum -y install httpd httpd-devel httpd-manual mysql mysql-devel mysql-server php php-devel php-mysql php-common php-pdo php-gd lm_sensors net-snmp php-snmp net-snmp-utils
+	chkconfig mysqld on
+	service mysqld start
+	chkconfig snmpd on
+	service snmpd start
+	chkconfig httpd on
+	service httpd start
+3、配置snmp的环境：
+	sed -i 's/#view all/view all/g' /etc/snmp/snmpd.conf
+	vim +41 /etc/snmp/snmpd.conf
+	com2sec notConfigUser  localhost       public
+	com2sec notConfigUser  192.168.188.0/24       public
+	vim +62 /etc/snmp/snmpd.conf
+	access  notConfigGroup ""      any       noauth    exact  all none none
+	service snmpd restart
+	snmpwalk -v 2c -c public localhost if #验证是否正确，若出现“Timeout: No Response from 127.0.0.1”则前面配置出错，检查。
+4、创建数据库存储cacti数据：
+	mysql -e "create database cacti;"
+	mysql -e "grant all on cacti.* to cactiuser@localhost identified by 'cactiuser';"
+	mysql -e "flush privileges;"
+5、安装rrdtool工具和cacti：
+	yum -y install cairo-devel libxml2-devel pango pango-devel perl-CPAN 
+	wget https://codeload.github.com/oetiker/rrdtool-1.x/zip/master
+	wget http://www.cacti.net/downloads/cacti-0.8.8a.tar.gz
+	unzip rrdtool-1.x-master.zip
+	cd rrdtool-1.x-master
+	./configure --prefix=/usr/local/rrdtool && make && make install
+	tar zxvf cacti-0.8.8a.tar.gz
+	mv cacti-0.8.8a /var/www/html/cacti
+	cd /var/www/html/cacti
+	mysql cacti < cacti.sql
+6、修改cacti的配置文件：
+	vim /var/www/html/cacti/include/config.php
+	$database_type = "mysql";
+	$database_default = "cacti";
+	$database_hostname = "localhost";
+	$database_username = "cactiuser";
+	$database_password = "cactiuser";
+	$database_port = "3306";
+	$database_ssl = false;
+7、添加cactiuser用户，并添加计划任务添加数据：
+	user cactiuser
+	echo "cactiuser" |passwd --stdin cactiuser
+	echo "*/5 * * * * /usr/bin/php /var/www/html/cacti/poller.php &>/dev/null" >/var/spool/cron/cactiuser
+	service crond restart
+8、在浏览器中安装初始化cacti：
+	浏览器输入http://Your-Host-IP/cacti
+	安装cacti
+9、插件：thold-v0.4.9-3.tar.gz(报警插件)	settings-v0.71-1.tgz(让插件工作的插件)
+10、自定义脚本，生成图像模板、数据模板的方法:
+	监听TCP的3种连接的个数，script.sh脚本的执行结果必须是："TAG1:NUM1 TAG2:NUM2 ..."的形式，将脚本放在<path_cacti>/scripts/目录下。
+	在http://Your-Host-IP/cacti的控制台下，依次添加如下信息：
+Data Input Methods ->  Data Templates -> Data Source -> Graph Templates -> Graph Management
+	
+	

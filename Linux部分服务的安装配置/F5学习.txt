@@ -1,0 +1,84 @@
+F5
+1、ADN(Application Delivery Networks)--应用交付网络，旨把数据中心的应用和业务快速、安全、高可用的交付到客户端，F5就是实现这种解决方案的一系列产品。
+
+2.通俗地介绍
+	在F5上配置网站对外的公网IP，接收来自Internet的请求，然后通过NAT转换把
+公网IP转换成后端Web服务器的私有地址，把请求转到各个服务器上，实现通信的安全。F5在转发请求的时候，能通过自身的分发算法（如轮询），把请求均衡地分发到web服务器上。
+	通过Monitor机制，实时地检测后端服务器的状态，如果发现单点故障，便终止
+向此服务器发送请求。当故障解决后，F5又会自动重新发送请求给它。
+	在性能优化方面，F5能够保持会话状态，能够压缩数据传输，从而减轻服务器的
+压力并减轻网络的吞吐压力。
+
+3、指示灯和面板介绍：
+1.1最左端的红色网线所插的端口是F5的带外网络管理端口。
+1.2左端两个较粗的线缆所插的端口：黑色对应的是Console口，白色对应的是Failover端口。
+（ Failover端口是两台F5工作在HA主备模式下用到的）
+1.3中间的8个端口是以太网端口。端口编号依次为1.1到1.8.
+1.4右面的两个挨着的端口是光纤端口。编号分别为2.1和2.2.
+1.5最右面的为LED显示屏、指示灯、操作键。
+power：正常情况下为绿色，表示系统工作正常
+status: 当指示灯为绿色时，表示该设备为Active模式；当指示灯为橙色时 ，表示该设备为Standby模式。
+activity：在有数据流通过时，指示灯闪烁；无数据流通过时，时定时闪
+alarm：当系统发现有服务节点处于“不健康”的状态时，会显示为红色
+
+4、负载均衡的7中算法：
+4.1、Round Robin(轮询)：这是缺省的配置方式。用户的连接请求平均的分配给作为负载均衡的所有节点。如果作为服务器节点的设备在处理速度和内存上是一致的，这样的处理方法是可取的。
+4.2、Radio(速率)：服务器节点现根据处理能力确定各自的处理请求比重，然后根据比重吧请求发送到服务器节点进行处理，这样可以解决在pool中存在不同型号的均衡器设备问题
+4.3、DynamicRadio：和Radio类似，但是它们的请求比重是根据每个节点的处理能力而动态分配的，节点处理能力的监控可以实时的通过获得每个节点的当前连接数、最快的响应速度等动态确定
+4.4、Fastest：设备获得当前处理速度最快的节点，然后把请求转发到这个最快的节点。
+4.5、Least Connections：在所有节点差不多的处理能力情况下，把当前的处理请求转发到当前连接数最少的服务节点。
+4.6、Observerd(观察)：这是Least Connections和Fastest模式的结合。所有节点按照连接数和响应速度最快的总体情况进行排序，后续根据用户请求中更大比例让那些连接数少并且处理速度最快的节点处理。这种方式对节点的处理性能不一致时适用。
+4.7、Predictive(预测)：这种方式使用Observed方式对节点进行排序，但是考虑了这些节点处理能力的变化趋势以及已确定某个节点的处理能力是在上升还是降低，并使得处理能力呈上升趋势的节点处理更多的请求。
+
+F5还提供了SSL加速、软件升级、IP地址过滤、带宽控制等辅助功能。
+
+f5的命令行下常用的几个管理命令
+1、命令：bigtop； 查看BIGIP 上各VS、NODE 上的数据流量，总连接数及几秒内的新建连接均会显示出来，
+2、命令：tmstat； 查看CPU 情况
+3、 查看连接情况。
+b conn 查看所有连接（连接数太大时不能用）
+b conn | grep X.X.X.X 查看地址X.X.X.X 的连接情况
+b conn | wc 统计连接总数
+4、 命令：route ；查看路由信息，追踪地址
+5、 命令 b Mgmt show ;查看管理接口的IP 地址；
+6、bigstart restart (gmt)；重启所有(gmt)进程；
+7、tcpdump -ni 1.1(vlaname);查看1.1接口(某个vlan下)的流量分析；
+8、tcpdump –ni vlan_name host ip and port 80 ；某vlan下指定某个IP的80端口的数据流向分析
+b conn show ；查看连接数
+bigstart restart ；启动所有进程
+bigstart restart gtmd ；启动gtm进程
+bigtop –n –delay 1 ；查看实时流量
+tmstat ；查看实时状态
+tcpdump –ni 1.1 ；接口1.1的数据流向分析
+tcpdump –ni vlan_name ；某vlan下的流向分析
+tcpdump –ni vlan_name host ip ；某vlan下指定某个 IP的数据流向分析
+tcpdump –ni vlan_name host ip and port 80 ；某vlan下指定某个IP的80端口的数据流向分析
+tcpdump –ni vlan_name host ip and icmp ；某vlan下指定某个IP有ICMP数据流向分析
+physmem –m 
+显示所有安装的物理内存。TMM只给Kernel 留380M的空间。
+b memory show
+显示TMM的内存分配情况。注意，这部分和top看到的内存加起来正好应该等于物理内存。
+b platform
+显示设备的序列号，板卡序列号等。还包含CPU温度、各监测点的温度、风扇、电源的状况等。
+tmstat
+动态显示TMM的CPU占用率、内存占用情况、连接建立情况等。
+bigtop
+动态显示系统的吞吐率、VS、Member的连接数量等。
+在命令行下看TMM CPU占用率：
+tmstat
+在命令行下看TMM的其他状态
+tmsctl -a
+在命令行下看带宽控制的实时状态
+b rate class show
+切换BIGIP的启动分区
+switchboot命令即可
+启用：b global ipforwarding enable
+禁用：b global ipforwarding disable
+b mgmt route
+查看、添加、删除管理口路由
+pico 文件名
+文件编辑
+Hwclock –systohc
+硬件时间同步与host时间同步(有方向性)，是一组命令有各种方向的时间同步
+b list :view the current(in memory)configuration
+b load： load the saved configuration(file)to memory

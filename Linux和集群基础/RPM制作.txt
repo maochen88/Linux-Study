@@ -1,0 +1,58 @@
+RPM制作宏定义文件：/usr/lib/rpm/macros
+
+1、BUILD
+2、RPMS
+3、SOURCES
+4、SPECS
+5、SRPMS
+
+一、实现规划工作车间：
+在普通用户的家目录下创建宏：vim ~/.rpmmacro
+%_topdir	/home/stu/rpmbuild
+定制rpm包需要在%_topdir下建立以下5个目录
+目录名     说明                    macros中的宏名
+BUILD     编译rpm包的临时目录           %_builddir
+RPMS       最终生成的rpm包的所在目录      %_rpmdir
+SOURCES    所有源代码和补丁文件的存放目录   %_sourcedir
+SPECS     存放SPEC文件的目录(重要)        %_specdir
+SRPMS     源码格式rpm包存放路径          %_srcrpmdir
+rpmbuild --showrc|grep _topdir  #查看当前制作RPM的路径
+
+yum install rpmdevtools -y
+以上目录无需手动创建，执行rpmdev-setuptree命令即可在用户家目录下自动创建目录树
+
+基本格式：rpmbuild  [options]  [spec文档|tarball包|源码包]
+1、从spec文档建立rpm包有以下选项：
+-bp        #只执行spec的%pre 段(解开源码包并打补丁，属于准备阶段)
+-bc        #执行spec的%pre和%build 段(完成准备阶段并编译)
+-bi        #执行spec中%pre，%build与%install(准备，编译并安装)
+-bl        #检查spec中的%file段(查看文件是否包含完全)
+-ba        #二进制的rpm包和源码的rpm包都建立(常用)
+-bb        #只建立二进制的rpm包(常用)
+-bs        #只建立源码的rpm包
+ 
+2.  从tarball包建立rpm包有以下选项：
+-tp         #对应sepc方式的-bp
+-tc         #对应sepc方式的-bc
+-ti         #对应sepc方式的-bi
+-ta         #对应sepc方式的-ba
+-tb         #对应sepc方式的-bb
+-ts         #对应sepc方式的-bs
+ 
+3.  从源码包建立rpm包有以下选项：
+--rebuild    #建立二进制包，同sepc方式的-bb
+--recompile   #同sepc方式的-bi
+ 
+4.  其他选项：
+--buildroot=DIRECTORY  #确定以root目录建立包
+--clean         #完成打包后清除BUILD下的文件目录
+--nobuild        #不进行%build的阶段
+--nodeps         #不检查建立包时的关联文件
+--nodirtokens          #generate packageheader(s) compatible with (legacy) rpm[23] packaging
+--rmsource       #完成打包后清除SOURCES
+--rmspec        #完成打包后清除SPEC
+--short-cricuit     #skip straight tospecified stage (only for c,i)
+--target=CPU-VENDOR-OS #确定包的最终使用平台
+二、收集源码文件
+
+三、制作spec文件

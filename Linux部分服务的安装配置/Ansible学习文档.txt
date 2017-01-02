@@ -1,0 +1,139 @@
+1、配置epel源，安装ansible,只需在主控端部署Ansible环境，被控端无需做任何操作；
+	yum install ansible
+	rpm -ql ansible
+
+ansible 主机/主机组 -m MOD_NAME -a MOD_ARGS	
+
+2、ansible的一般用法：
+ansible-doc -l 获取模块信息
+ansible-doc -s MOD_NAME 获取指定模块的使用帮助
+ansible-doc -l   #查看当前ansible支持多少模块可能会报错，可执行以下步骤
+sed -i 's/^#deprecation_warnings = True/deprecation_warnings = False/' /etc/ansible/ansible.cfg
+mv /usr/lib/python2.6/site-packages/ansible/modules/extras/cloud/misc/rhevm.py ./
+	ansible-doc -s mysql_replication #查看指定模块的参数
+3、ansible的/etc/ansible/hosts文件：
+   cat /etc/ansible/hosts
+   [test]
+   192.168.88.11
+   192.168.88.22
+   192.168.88.33
+4、ansible使用方法举例：
+ansible test -m command 'ping' #若执行COMMAND则可省略command，但是command模块不支持远程的管道命令，shell模块支管道mingl
+ansible test -m shell -a 'cat /etc/passwd|grep root'
+PS:当不熟悉ansible模块时可用该模块，和在终端前相同
+ansible test -m copy -a 'content="hello\nworld" dest=/tmp/test.ansible mode=666'
+ansible test -m shell -a 'cat /tmp/test.ansible'
+copy模块的简介：相关选项如下： backup：在覆盖之前，将源文件备份，备份文件含时间信息。有两个选项：yes|no 
+content：用于替代“src”，可以直接设定指定文件的值 
+dest：必选项。要将源文件复制到的远程主机的绝对路径，如果源文件是一个目录，那么该路径也必须是个目录 
+ directory_mode：递归设定目录的权限，默认为系统默认权限 
+force：如果目标主机包含该文件，但内容不同，如果设置为yes，则强制覆盖，如果为no，则只有当目标主机的目标位置不存在该文件时，才复制。默认为yes 
+others：所有的file模块里的选项都可以在这里使用 
+src：被复制到远程主机的本地文件，可以是绝对路径，也可以是相对路径。如果路径是一个目录，它将递归复制。在这种情况下，如果路径使用“/”来结尾，则只复制目录里的内容，如果没有使用“/”来结尾，则包含
+目录在内的整个内容全部复制，类似于rsync。
+
+5、fetch模块从远程某主机获取文件到本地：dest：用来存放文件的目录，例如存放目录为backup，源文件名称为/etc/profile在主机pythonserver中，那么保存为/backup/pythonserver/etc/profile 
+file模块设置文件属性： 
+创建目录：-a "path= state=directory" 
+创建链接文件：-a "path= src=   state=link" 
+删除文件：-a "path=   state=absent"
+例：ansible test -m file -a 'path=/tmp/test state=directory‘ #创建目录
+
+6、yum模块，也可使用apt和zypper工具，选项介绍：
+disablerepo/enablerepo  #临时启用或者禁用yum库，只用于安装或者更新
+name=					#安装包的名称
+state=					#present安装，latest安装最新的，absent卸载软件
+例：ansible test -m yum -a 'name=htop state=present' #安装htop软件
+
+7、service服务管理模块，选项介绍：
+enabled		#设置开机启动
+name=		#服务名称
+state=		#started启动服务，stopped停止服务，restarted重启服务，reloade重新载入服务
+例：ansible test -m service -a 'name=zabbix-agent state=restarted'
+
+8、user用户管理模块，选项介绍：
+group		#指定基本组
+home		#指定家目录
+name		#指定用户名
+password	#指定用户名
+shell		#指定默认的shell
+state		#指定账号状态，不指定位创建，指定为absent则为删除
+uid			#指定用户的UID
+update_password	#更新用户密码
+expires		#指明密码过期时间
+例：ansible test -m user -a "name=stu uid=12345 password=123456 home=/home/student"
+
+9、setup：获取指定主机的各种信息。
+一种用法：ansible test -m setup
+SElinux管理：ansible test -m selinux -a 'state=disabled'
+
+10、script脚本模块：
+使用方法：在本地主机建立一个shell或者python脚本test.sh/test.py
+分发到各个主机执行：ansible test -m script -a 'test.sh'
+
+二、playbook就是一个用yaml语法把多个模块堆起来的一个文件：
+1.核心元素：
+Tasks：任务，由模块定义的操作的列表；
+Variables：变量
+Templates：模板，即使用了模板语法的文本文件；
+Handlers：由特定条件触发的Tasks；
+Roles：角色；
+
+2.playbook的基础组件：
+Hosts：运行指定任务的目标主机；
+remote_user：在远程主机以哪个用户身份执行；
+    sudo_user：非管理员需要拥有sudo权限；
+tasks：任务列表
+    模块，模块参数：
+        格式：
+            (1) action: module arguments
+            (2) module: arguments
+
+3、ansible-playbook详解：
+ansible-playbook --syntax-check test.yaml 	#测试语法的正确性
+ansible-playbook -C test.yaml 				#测试运行
+ansible-playbook test.yaml					#运行yaml脚本
+运行脚本的参数介绍：
+	-t TAGS,--tags=TAGS 		#指定标签
+	--skip-tags=SKIP-TAGS		#跳过指定的标签
+	--start-at-task=START_TASK	#从哪个任务后执行
+tags：给指定的任务顶一个调用标识：
+- name: NAME
+  module: arguments
+  tags: TAG_ID
+yaml脚本范例：
+*************************************************************************
+- hosts: 主机\主机组
+  remote_user: 在远程主机以哪个用户身份执行；
+  tasks:
+  - name: 执行任务的名称(例:install httpd packages)
+    yum: name=httpd state=latest
+  - name: 执行任务的名称(install conf line)
+    copy: src=/root/httpd.conf dest=/ect/httpd/httpd.conf
+	notify: reload httpd service #通知机制
+  - name: 执行任务的名称(例：start httpd service)
+    service: named=httpd state=started #模块以及各个参数
+  handlers: #触发器标识
+  - name: 执行任务的名称(reload httpd service)
+    shell: 具体的shell命令(systemctl reload httpd.service)
+*************************************************************************
+4、yaml变量的使用：
+变量的调用规则：{{ VAR_NAME }} ###左右有空格
+（1）内建变量
+（2）自定义变量(优先级最高，推荐使用）
+$cat /root/test.yaml
+vars:
+- VAR_NAME1: VALUE1
+- VAR_NMAE2: VALUE2
+（3）在/etc/ansible/hosts中为每个主机定义专用的变量值：
+$cat /etc/ansible/hosts
+[web]
+10.1.1.2 VAR=nginx
+10.1.1.3 VAR=httpd
+$cat /root/test.yaml
+- hosts: web
+  remote_user: root
+  tasks:
+  - name: install httpd package
+    yum: name={{ VAR }} state=latest
+参考学习文档：http://rfyiamcool.blog.51cto.com/1030776/1420479

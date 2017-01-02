@@ -1,0 +1,97 @@
+安装平台：RHEL6.4
+1、配置本地yum源：
+	mkdir /opt/yum
+	mount /dev/cdrom /opr/yum
+	cat > /etc/yum.repo.d/local.repo < EOF
+	[Base]
+	name=Base
+	baseurl=file:///opt/yum/Server
+	enabled=1
+	gpgcheck=0
+	
+	[HighAvailability]
+	name=HighAvailability
+	baseurl=file:///opt/yum/HighAvailability
+	enabled=1
+	gpgcheck=0
+
+	[LoadBalancer]
+	name=LoadBalancer
+	baseurl=file:///opt/yum/LoadBalancer
+	enabled=1
+	gpgcheck=0
+	
+	[ResilientStorage]
+	name=ResilientStorage
+	baseurl=file:///opt/yum/ResilientStorage
+	enabled=1
+	gpgcheck=0
+	EOF
+2、安装Corosync+HeartbeatV3软件：
+	yum install cluster-glue corosync corosynclib pacemaker pacemaker-cts pacemaker-libs resource-agents libesmtp libibverbs librdmacm lm_sensors libtool-ltdl openhpi-libs perl-TimeDate  -y
+	tar zxvf heartbeat-3.0.4.tar.gz -C /usr/src/Heartbeat
+	cd /usr/src/Heartbeat
+	yum --nogpgcheck localinstall *.rpm -y
+3、安装crm命令行管理工具：crm
+	yum install crmsh-1.2.6-0.rc2.2.1.x86_64.rpm pssh-2.3.1-2.1.x86_64.rpm -y
+	注：pacemaker-1.1.8版本以后不再支持crm命令，故需要单独安装
+Corosync-1.4.1+Heartbeat-3.0.4安装完毕，以下是配置文件的设置，以及简单的资源监控操作
+/etc/corosync/corosync.conf文件内容：
+*********************************************************************
+compatibility: whitetank
+totem {
+	version: 2
+	secauth: on
+	threads: 2
+	interface {
+		ringnumber: 0
+		bindnetaddr: 192.168.138.0
+		mcastaddr: 239.255.10.19
+		mcastport: 5405
+		ttl: 1
+	}
+}
+logging {
+	fileline: off
+	to_stderr: no
+	to_logfile: yes
+	logfile: /var/log/cluster/corosync.log
+	to_syslog: no
+	debug: off
+	timestamp: on
+	logger_subsys {
+		subsys: AMF
+		debug: off
+	}
+}
+service	{
+	rev: 0
+	name: pacemaker
+}
+aisexec	{
+	user: root
+	group: root
+}
+********************************************************************
+生成秘钥文件：corosync-keygen
+node node5.maochen.com \
+	attributes standby="off"
+node node6.maochen.com \
+	attributes standby="off"
+primitive httpd lsb:httpd \
+	meta target-role="Stopped"
+primitive nfs ocf:heartbeat:Filesystem \
+	params device="192.168.138.254:/mydata" directory="/var/www/html" fstype="nfs" \
+	op start timeout="60" interval="0" \
+	op stop timeout="60" interval="0" \
+	meta target-role="Stopped"
+primitive vip ocf:heartbeat:IPaddr \
+	params ip="192.168.138.100" nic="eth0" cidr_netmask="24" \
+	meta target-role="Stopped"
+property $id="cib-bootstrap-options" \
+	dc-version="1.1.8-7.el6-394e906" \
+	cluster-infrastructure="classic openais (with plugin)" \
+	expected-quorum-votes="4" \
+	stonith-enabled="false" \
+	no-quorum-policy="ignore" \
+	last-lrm-refresh="1476959278"

@@ -1,0 +1,3 @@
+cp config_global_default.php config_global.php
+cp config_ucenter_default.php config_ucenter.php
+chmod  777 data config data/cache/ data/avatar/ data/plugindata data/download data/addonmd5 data/template data/threadcache data/attachment/album data/attachment/forum data/attachment/group data/log uc_client/data/cache uc_server/data uc_server/data/avatar uc_server/data/cache uc_server/data/backup uc_server/data/logs uc_server/data/tmp uc_server/data/view/ data/attachment config/config_global.php config/config_ucenter.php

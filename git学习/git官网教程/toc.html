@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <title>Pro Git</title>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+    <link rel="stylesheet" type="text/css" href="theme/html/html.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body data-type="book">
+    <div class="navbar">
+      <h1>Pro Git</h1>
+      <p></p>
+    </div>
+    
+<p><nav data-type="toc">
+<ol>
+  <li data-type="preface">
+    <a href="preface.html">Scott Chacon 序</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="preface">
+    <a href="preface.html">Ben Straub 序</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="preface">
+    <a href="preface.html">献辞</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="preface">
+    <a href="contributors.html">贡献者</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="preface">
+    <a href="introduction.html">引言</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="1-introduction.html">起步</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="1-introduction.html#-BDHOf9">关于版本控制</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-introduction.html#-EDHoUOf2">本地版本控制系统</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-introduction.html#-zxHNuOfk">集中化的版本控制系统</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-introduction.html#-PlHMT6fA">分布式版本控制系统</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-introduction.html#git-5xHJUG">Git 简史</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-introduction.html#git-edHxu5">Git 基础</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-introduction.html#-zxHVfbuk">直接记录快照，而非差异比较</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-introduction.html#-PlH8UQuA">近乎所有操作都是本地执行</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-introduction.html#git-qmH4uDud">Git 保证完整性</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-introduction.html#git-7wHgTruq">Git 一般只添加数据</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-introduction.html#-ReHMS4ux">三种状态</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-introduction.html#-EDHxTe">命令行</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-introduction.html#git-zxHMSJ">安装 Git</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-introduction.html#linux-7wHqUZSq">在 Linux 上安装</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-introduction.html#mac-ReHdugSx">在 Mac 上安装</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-introduction.html#windows-kJHETkS1">在 Windows 上安装</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-introduction.html#-WlHkSzSJ">从源代码安装</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-introduction.html#_first_time">初次运行 Git 前的配置</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-introduction.html#-xoHdSws7">用户信息</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-introduction.html#-ADHks5sy">文本编辑器</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-introduction.html#-mmHaIMsY">检查配置信息</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-introduction.html#_git_help">获取帮助</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-introduction.html#-7wHJtN">总结</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="1-git-basics.html">Git 基础</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="1-git-basics.html#_getting_a_repo">获取 Git 仓库</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#-NkteiLie">在现有目录中初始化仓库</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#_git_cloning">克隆现有的仓库</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-basics.html#-a6tesP">记录每次更新到仓库</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#_checking_status">检查当前文件状态</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#_tracking_files">跟踪新文件</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#-l4tbIosG">暂存已修改文件</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#-7mt0fys1">状态简览</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#_ignoring">忽略文件</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#_git_diff_staged">查看已暂存和未暂存的修改</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#_committing_changes">提交更新</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#-K8tMFJsg">跳过使用暂存区域</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#_removing_files">移除文件</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#_git_mv">移动文件</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-basics.html#_viewing_history">查看提交历史</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#-RetVtluY">限制输出长度</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-basics.html#_undoing">撤消操作</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#_unstaging">取消暂存的文件</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#-K8t5cgTg">撤消对文件的修改</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-basics.html#_remote_repos">远程仓库的使用</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#-m3tRiEHa">查看远程仓库</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#-ZRtjsPHw">添加远程仓库</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#_fetching_and_pulling">从远程仓库中抓取与拉取</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#_pushing_remotes">推送到远程仓库</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#_inspecting_remote">查看远程仓库</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#-2at8IdHV">远程仓库的移除与重命名</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-basics.html#_git_tagging">打标签</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#-ZRtyijIw">列出标签</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#-l4tYslIG">创建标签</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#_annotated_tags">附注标签</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#-b6t5TxI1">轻量标签</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#-2atMHeIV">后期打标签</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#_sharing_tags">共享标签</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-basics.html#-K8t9fAIg">检出标签</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-basics.html#_git_aliases">Git 别名</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-basics.html#-ZRtEU4">总结</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="1-git-branching.html">Git 分支</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="1-git-branching.html#_git_branches_overview">分支简介</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-branching.html#_create_new_branch">分支创建</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-branching.html#_switching_branches">分支切换</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-branching.html#-QjtQTA">分支的新建与合并</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-branching.html#_basic_branching">新建分支</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-branching.html#_basic_merging">分支的合并</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-branching.html#_basic_merge_conflicts">遇到冲突时的分支合并</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-branching.html#_branch_management">分支管理</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-branching.html#-bqtwsx">分支开发工作流</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-branching.html#-x5t7Hwsm">长期分支</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-branching.html#_topic_branch">特性分支</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-branching.html#_remote_branches">远程分支</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-branching.html#_pushing_branches">推送</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-branching.html#_tracking_branches">跟踪分支</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-branching.html#-YPteuBIg">拉取</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-branching.html#_delete_branches">删除远程分支</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-branching.html#_rebasing">变基</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-branching.html#-Jpt3HAfl">变基的基本操作</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-branching.html#-1GtbuxfN">更有趣的变基例子</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-branching.html#_rebase_peril">变基的风险</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-branching.html#_rebase_rebase">用变基解决变基</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-branching.html#vs-VPtgskfd">变基 vs. 合并</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-branching.html#-M2t8Uk">总结</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="1-git-server.html">服务器上的 Git</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="1-git-server.html#-bvtxI1">协议</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-server.html#-JptzikIG">本地协议</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-server.html#http-W5t0HmIn">HTTP 协议</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-server.html#ssh-6kt1hYIN">SSH 协议</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-server.html#git-wVtqIPI1">Git 协议</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-server.html#_git_on_the_server">在服务器上搭建 Git</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-server.html#_bare_repo">把裸仓库放到服务器上</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-server.html#-KNt1cLTB">小型安装</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-server.html#_generate_ssh_key">生成 SSH 公钥</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-server.html#_setting_up_server">配置服务器</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-server.html#git-6ktnUE">Git 守护进程</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-server.html#smart-http-wVt6cr">Smart HTTP</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-server.html#gitweb-D0tJtP">GitWeb</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-server.html#gitlab-lotZFY">GitLab</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-server.html#-YRtniBFo">安装</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-server.html#-NgtnHJFR">管理</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-server.html#-KNt0hvFB">基本用途</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-server.html#-01tMIWFJ">一起工作</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-server.html#-58tVCL">第三方托管的选择</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-server.html#-YRt5sJ">总结</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="1-distributed-git.html">分布式 Git</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="1-distributed-git.html#-nGI0cM">分布式工作流程</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#-B3InSxcg">集中式工作流</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#_integration_manager">集成管理者工作流</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#-vRIxHgcB">司令官与副官工作流</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#-20IvuacG">工作流程总结</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-distributed-git.html#_contributing_project">向一个项目贡献</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#_commit_guidelines">提交准则</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#_private_team">私有小型团队</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#-lrINixHR">私有管理团队</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#_public_project">派生的公开项目</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#_project_over_email">通过邮件的公开项目</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#-wrIpIBH9">总结</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-distributed-git.html#-B3I6u5">维护项目</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#-vRIJSzuB">在特性分支中工作</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#_patches_from_email">应用来自邮件的补丁</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#_checking_out_remotes">检出远程分支</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#_what_is_introduced">确定引入了哪些东西</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#-3gIMTpua">将贡献的工作整合进来</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#_tagging_releases">为发布打标签</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#_build_number">生成一个构建号</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#_preparing_release">准备一次发布</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-distributed-git.html#_the_shortlog">制作提交简报</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-distributed-git.html#-o9IBTd">总结</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="1-github.html">GitHub</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="1-github.html#-PztOTZ">账户的创建和配置</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-github.html#ssh-X3txheT5">SSH 访问</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#_personal_avatar">头像</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#-46tvHYTR">邮件地址</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#-QWtoUxT8">两步验证</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-github.html#-YjtehW">对项目做出贡献</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-github.html#fork-DPtzsZhw">派生（Fork）项目</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#_github_flow">GitHub 流程</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#-eNtYIlh5">合并请求的进阶用法</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#markdown-X3tXTvh5">Markdown</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-github.html#_maintaining_gh_project">维护项目</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-github.html#-Botksgug">创建新的版本库</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#-eNt5f1u5">添加合作者</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#-X3tNIYu5">管理合并请求</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#-6RtXTYuk">提醒和通知</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#-46t1hQuR">通知页面</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#-QWt7uOu8">网页通知</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#-8dtGH1un">邮件通知</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#-2DtoUeuY">特殊文件</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#readme-l6t4cMuw">README</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#contributing-LltKtkuv">贡献 CONTRIBUTING</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#-o6t7FZu8">项目管理</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-github.html#_github_orgs">管理组织</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-github.html#-eNtjs7H5">组织的基本知识</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#-X3tmflH5">团队</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#-6Rt3IVHk">审计日志</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-github.html#github-Bot8UJ">脚本 GitHub</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-github.html#-6RtEfaUk">钩子</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#github-api-46tPIbUR">GitHub API</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#-QWt8T8U8">基本用途</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#-8dt7hAUn">在一个问题上评论</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#pull-request-2DtLu4UY">修改 Pull Request 的状态</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-github.html#octokit-l6tgHJUw">Octokit</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-github.html#-eNtRcV">总结</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="1-git-tools.html">Git 工具</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="1-git-tools.html#_revision_selection">选择修订版本</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-oetdHKSV">单个修订版本</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#sha-1-eetQSESn">简短的 SHA-1</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#_branch_references">分支引用</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#_git_reflog">引用日志</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-3vtys4SA">祖先引用</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#_commit_ranges">提交区间</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-tools.html#_interactive_staging">交互式暂存</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-3vtDI6hA">暂存与取消暂存文件</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-z6tos6h6">暂存补丁</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-tools.html#_git_stashing">储藏与清理</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-OmtGSGIk">储藏工作</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-3vtohVIA">创造性的储藏</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-z6tzIxI6">从储藏创建一个分支</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#_git_clean">清理工作目录</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-tools.html#_signing">签署工作</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#gpg-Omt3HAsk">GPG 介绍</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-3vt0SgsA">签署标签</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-z6t9h8s6">验证标签</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#_signing_commits">签署提交</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-rEtGsBsg">每个人必须签署</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-tools.html#_searching">搜索</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#_git_grep">Git Grep</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#git-z6tnSPT6">Git 日志搜索</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-tools.html#_rewriting_history">重写历史</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#_git_amend">修改最后一次提交</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#_changing_multiple">修改多个提交信息</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-YXtMIYf1">重新排序提交</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#_squashing">压缩提交</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-J4trTyfR">拆分提交</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#filter-branch-X7t0fqfD">核武器级选项：filter-branch</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-tools.html#_git_reset">重置揭密</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-BdtBHGUx">三棵树</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-rEt0SlUg">工作流程</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-YXtnhoU1">重置的作用</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-M4tyIKUG">通过路径来重置</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-J4txs3UR">压缩</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-X7t3TyUD">检出</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-4dtpfbU1">总结</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-tools.html#_advanced_merging">高级合并</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-M4tJhVcG">合并冲突</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#_undoing_merges">撤消合并</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-X7tasEcD">其他类型的合并</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-tools.html#_rerere">Rerere</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-tools.html#git-rEt4F3">使用 Git 调试</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#_file_annotation">文件标注</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#_binary_search">二分查找</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-tools.html#_git_submodules">子模块</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#_starting_submodules">开始使用子模块</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#_cloning_submodules">克隆含有子模块的项目</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-PEtJsPCY">在包含子模块的项目上工作</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-p0tGTrCE">子模块技巧</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-9EtJfxCB">子模块的问题</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-tools.html#_bundling">打包</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-tools.html#_replace">替换</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-tools.html#_credential_caching">凭证存储</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-net7cGHR">底层实现</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-tools.html#-EEtatdHY">自定义凭证缓存</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-tools.html#-4dtXSX">总结</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="1-customizing-git.html">自定义 Git</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="1-customizing-git.html#_git_config">配置 Git</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-customizing-git.html#-AnTesjIK">客户端基本配置</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-customizing-git.html#git-ORTqc8IN">Git 中的着色</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-customizing-git.html#_external_merge_tools">外部的合并与比较工具</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-customizing-git.html#-vdT5F8IE">格式化与多余的空白字符</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-customizing-git.html#-nPT6CAIE">服务器端配置</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-customizing-git.html#git-bRT5hy">Git 属性</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-customizing-git.html#-GpTghPh6">二进制文件</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-customizing-git.html#_keyword_expansion">关键字展开</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-customizing-git.html#-znTeHVh0">导出版本库</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-customizing-git.html#-kaTafzh5">合并策略</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-customizing-git.html#_git_hooks">Git 钩子</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-customizing-git.html#-GpTWI2i6">安装一个钩子</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-customizing-git.html#-PkTZhKiG">客户端钩子</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-customizing-git.html#-znTDi8i0">服务器端钩子</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-customizing-git.html#_an_example_git_enforced_policy">使用强制策略的一个例子</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-customizing-git.html#-znTbhbH0">服务器端钩子</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-customizing-git.html#-kaTDiyH5">客户端钩子</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-customizing-git.html#-GpTpfj">总结</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="1-git-and-other-scms.html">Git 与其他系统</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="1-git-and-other-scms.html#git-WPtgIW">作为客户端的 Git</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-and-other-scms.html#_git_svn">Git 与 Subversion</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-and-other-scms.html#git-mercurial-jzteIAIG">Git 与 Mercurial</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-and-other-scms.html#git-perforce-DYteuvIb">Git 与 Perforce</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-and-other-scms.html#git-tfs-KZtLiwIX">Git 与 TFS</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-and-other-scms.html#_migrating">迁移到 Git</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-and-other-scms.html#subversion-jztasjuG">Subversion</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-and-other-scms.html#mercurial-DYtzIjub">Mercurial</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-and-other-scms.html#_perforce_import">Perforce</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-and-other-scms.html#_git_tfs">TFS</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-and-other-scms.html#_custom_importer">一个自定义的导入器</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-and-other-scms.html#-ojtGiq">总结</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="chapter">
+    <a href="1-git-internals.html">Git 内部原理</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="1-git-internals.html#_plumbing_porcelain">底层命令和高层命令</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-internals.html#_objects">Git 对象</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#_tree_objects">树对象</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#_git_commit_objects">提交对象</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#-dZtQcEin">对象存储</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-internals.html#_git_refs">Git 引用</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#_the_head">HEAD 引用</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#-Gwt3TQIo">标签引用</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#-n5tvuXIX">远程引用</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-internals.html#-QDtDfj">包文件</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-internals.html#_refspec">引用规格</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#_pushing_refspecs">引用规格推送</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#-7ztxclUe">删除引用</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-internals.html#-33tacA">传输协议</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#-jWtZH1c3">哑协议</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#-MRt6hEcG">智能协议</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#-mVt9Tec2">协议总结</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-internals.html#-6mtXtv">维护与数据恢复</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#_git_gc">维护</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#_data_recovery">数据恢复</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#_removing_objects">移除对象</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-internals.html#-jWtdFM">环境变量</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#-mVtbHnF2">全局行为</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#-0Rtyh4Fa">版本库位置</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#-oEtZT5FE">路径规则</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#-WDtmu5Fq">提交</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#-1Qtvi5FR">网络</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#-PDtYIlFG">比较和合并</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#-xwtEfDFB">调试</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-internals.html#-4gtZUaFv">其它</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-internals.html#-MRtOC2">总结</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="appendix">
+    <a href="1-git-other-environments.html">其它环境中的 Git</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="1-git-other-environments.html#-e4tqIv">图形界面</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-other-environments.html#gitk-git-gui-oMt3hzI4">gitk 和 git-gui</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-other-environments.html#mac-windows-github-3OtrHWIj">Mac 和 Windows 上的 GitHub 客户端</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-other-environments.html#-k6tATeIb">其它图形界面</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-other-environments.html#visual-studio-git-Qbt8hg">Visual Studio 中的 Git</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-other-environments.html#eclipse-git-j6tyH7">Eclipse 中的 Git</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-other-environments.html#bash-git-oMtzTx">Bash 中的 Git</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-other-environments.html#zsh-git-3OtDil">Zsh 中的 Git</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-other-environments.html#_git_powershell">Powershell 中的 Git</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-other-environments.html#-WBt7fp">总结</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="appendix">
+    <a href="1-embedding-git.html">将 Git 嵌入你的应用</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="1-embedding-git.html#git-bxfOIe">命令行 Git 方式</a>
+            <ol>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-embedding-git.html#libgit2-e4fgtG">Libgit2</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-embedding-git.html#-Z0fpU9tN">高级功能</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-embedding-git.html#_libgit2_bindings">其它绑定</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-embedding-git.html#-2LfnIltM">扩展阅读</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-embedding-git.html#jgit-7WfxT1">JGit</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-embedding-git.html#-m2fZiYTW">起步</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-embedding-git.html#-nQfWIGTl">底层命令</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-embedding-git.html#-5MfDtKTK">高层命令</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-embedding-git.html#-1vfWTATJ">拓展阅读</a>
+  </li>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="appendix">
+    <a href="1-git-commands.html">Git 命令</a>
+            <ol>
+  <li data-type="sect1">
+    <a href="1-git-commands.html#-qJt0Ip">设置与配置</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-config-0ZtRuVIP">git config</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-help-1VtrI0IL">git help</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-commands.html#-XKt7Tb">获取与创建项目</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-init-1VtVuVTL">git init</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-clone-5LtDIGTO">git clone</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-commands.html#-0ZtVsY">快照基础</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-add-5Lt8u4sO">git add</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-status-K6txILsv">git status</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-diff-YztbTxsq">git diff</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-difftool-Nytws0sw">git difftool</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-commit-AGtVSOsE">git commit</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-reset-zytwhrs4">git reset</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-rm-m6tOfks1">git rm</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-mv-8ytqUgs9">git mv</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-clean-krtwcGsZ">git clean</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-commands.html#-1VtdSd">分支与合并</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-branch-K6t3uJSv">git branch</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-checkout-YztgI5Sq">git checkout</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-merge-NytPTXSw">git merge</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-mergetool-AGtqsGSE">git mergetool</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-log-zytxS6S4">git log</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-stash-m6tzh2S1">git stash</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-tag-8ytwfXS9">git tag</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-commands.html#-5Ltdhr">项目分享与更新</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-fetch-Yzt6uvhq">git fetch</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-pull-Nyt2Iehw">git pull</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-push-AGtETEhE">git push</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-remote-zytJsKh4">git remote</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-archive-m6tpSDh1">git archive</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-submodule-8ytJhah9">git submodule</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-commands.html#-K6tkf5">检查与比较</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-show-YztPiWfq">git show</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-shortlog-Nytpu8fw">git shortlog</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-describe-AGtvIafE">git describe</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-commands.html#-YztvUD">调试</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-bisect-AGtzu5UE">git bisect</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-blame-zytqIbU4">git blame</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-grep-m6t9TyU1">git grep</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-commands.html#-Nytgc1">补丁</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-cherry-pick-zytAu7c4">git cherry-pick</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-rebase-m6tJIVc1">git rebase</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-revert-8yteTQc9">git revert</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-commands.html#-AGtYtV">邮件</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-apply-m6tKuXt1">git apply</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-am-8ytQIxt9">git am</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-format-patch-krtJTdtZ">git format-patch</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-imap-send-7btYs3tq">git imap-send</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-send-email-aKtMSmtE">git send-email</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-request-pull-r4tghQtn">git request-pull</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-commands.html#-zytLF1">外部系统</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-svn-8ytMu3F9">git svn</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-fast-import-krt1IxFZ">git fast-import</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-commands.html#-m6trC6">管理</a>
+            <ol>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-gc-krt3uJCZ">git gc</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-fsck-7btVIxCq">git fsck</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-reflog-aKtyTkCE">git reflog</a>
+  </li>
+  <li data-type="sect2">
+    <a href="1-git-commands.html#git-filter-branch-r4t0sDCn">git filter-branch</a>
+  </li>
+</ol>
+      </li>
+  <li data-type="sect1">
+    <a href="1-git-commands.html#-8ytkHz">底层命令</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+      </li>
+  <li data-type="index">
+    <a href="index.html">Index</a>
+            <ol>
+</ol>
+      </li>
+</ol>
+</nav></p>
+    <div class="navigation">
+      <ul>
+        <li><a href="1-introduction.html" title="起步">Next</a></li>
+        <li><a href="introduction.html" title="引言">Previous</a></li>
+      </ul>
+    </div>
+  </body>
+</html>

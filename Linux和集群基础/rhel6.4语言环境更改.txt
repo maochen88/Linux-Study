@@ -1,0 +1,26 @@
+以node1做修改：
+修改# vi /etc/sysconfig/i18n ，默认为： 
+
+LANG="zh_CN.UTF-8" 
+
+备份i18n原文件为i18n_bak  #cp i18n i18n_bak
+远程备份该文件到各个节点：
+#scp  node2:/etc/sysconfig/i18n_bak  /etc/sysconfig/
+#scp  node3:/etc/sysconfig/i18n_bak  /etc/sysconfig/
+#scp  node4:/etc/sysconfig/i18n_bak  /etc/sysconfig/
+
+修改后： 
+
+LANG="en_US.UTF-8" 
+
+SUPPORTER="en_US.UTF-8:en_US:zh" 
+
+SYSFONT="latarcyrheb-sun16" 
+
+远程复制该文件覆盖原i18n文件：
+#scp  node2:/etc/sysconfig/i18n  /etc/sysconfig/
+#scp  node3:/etc/sysconfig/i18n  /etc/sysconfig/
+#scp  node4:/etc/sysconfig/i18n  /etc/sysconfig/
+
+
+所有机器重启，进入图形界面对目录名语言显示进行确认，完工默认语言环境已修改成功。

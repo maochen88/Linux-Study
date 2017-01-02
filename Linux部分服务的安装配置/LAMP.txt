@@ -1,0 +1,102 @@
+搭建LAMP平台：
+下载php镜像：https://downloads.php.net/~stas/或者https://secure.php.net/releases/
+下载mariadb(mysql数据库)镜像：https://downloads.mariadb.org/MariaDB/+files/
+下载httpd镜像：https://httpd.apache.org/download.cgi
+下载WordPress镜像：https://wordpress.org/download/release-archive/
+
+安装http软件：
+1、首先安装apr和apr-util软件
+	cd /usr/src/LAMP
+	tar zxvf apr-1.5.2.tar.gz
+	cd apr-1.5.2
+	./configure --prefix=/usr/local/apr
+	make && make insttall
+	
+	cd /usr/local/LAMP
+	tar zxvf apr-util-1.5.4.tar.gz
+	cd apr-util-1.5.4
+	./configure --prefix=/usrlocal/apr-util --with-apr=/usr/local/apr
+	make && make install
+2、安装httpd所需要的软件和库文件：
+	yum install pcre-devel mod_ssl openssl-devel
+3、安装httpd软件：
+	tar zxvf httpd-2.4.23.tar.gz
+	cd httpd-2.4.23
+	./configure --prefix=/usr/local/apache --sysconfdir=/etc/httpd/ --enable-so --enable-rewirte --enable-ssl --enable-cgi --enable-cgid --enable-modules=most --enable-mods-shared=most --enable-mpms-shared=all --with-apr=/usr/local/apr --with-apr-util=/usr/local/apr-util/
+	make && make install
+4、修改配置文件：
+	cd /etc/httpd/
+	echo "ServerName localhost:80" >> /httpd.conf
+	sed -i 's@index.html@index.html index.php@g' httpd.conf
+	在httpd.conf中添加如下内容：
+	AddType application/x-httpd-php .php
+	Include conf/vhost/vhost.conf
+	make /etc/httpd/conf/vhost
+	cat /etc/httpd/conf/vhost/vhost.conf #建立一个基于域名的虚拟主机：
+	<VirtualHost 192.168.138.100:80>
+		ServerName www.boke.com
+		DocumentRoot /mydata/boke
+		<Directory "/mydata/boke">
+			Options Indexes FollowSymLinks
+			Allowverride None
+			Require all granted
+		</Directory>
+	</VirtualHost>
+5、检测httpd的配置文件的语法并且重启apachectel服务
+	apachectl -t
+	apachectl start
+	
+安装mysql数据库软件
+1、利用源码安装mysql：
+	tar zxvf mysql-5.7.15-linux-glibc2.5-x86_64.tar.gz -C /usr/local
+	cd /usr/local
+	ln -sv mysql-5.7.15-linux-glibc2.5-x86_64 mysql
+	groupadd mysql
+	useradd -r -g mysql -s /sbin/nologin mysql
+	chown -R mysql:mysql ./mysql/*
+	mkdir /mydata/data -pv
+	chown -R mysql:mysql /mydata/data
+	./bin/mysqld --initialize --user=mysql --datadir=/mydata/data
+	sed -i 's@datadir=@datadir=/mydata/data@g' ./support/mysql.server
+	./support/mysql.server start
+	echo "export PATH=$PATH:/usr/local/mysql/bin" > /etc/profile.d/mysql.sh
+	echo "/usr/local/mysql/lib" > /etc/ld.so.conf.d/mysqld.conf
+	. /etc/profile.d/mysql.sh
+	mysql -uroot -p
+	mysql>set passowrd=password('密码');
+	mysql>flush privileges;
+	mysql>\q
+	
+安装php软件：
+1、安装PHP所需的软件和库文件：
+	yum install libxml2-devel bzip2-devel
+2、解压并安装PHP软件：
+	tar jxvf php-5.4.40.tar.bz2
+	cd php-5.4.40
+	./configure --prefix=/usr/local/php --with-mysql=mysqlnd --with-openssl --with-mysqli=mysqlnd  --enable-mbstring --with-freetype-dir --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr/ --enable-xml --enable-sockets --with-apxs2=/usr/local/apache/bin/apxs --with-mcrypt --with-config-file-path=/etc/php.ini --with-config-file-scan-dir=/etc/php.d/ --with-bz2 --enable-maintainer-zts
+	make &&  make install
+	
+安装ipvsadm软件：
+1、首先查看内核是否加载了ipvs模块(注：内核版本在2.4以后内核都默认加载了ipvs模块)
+	modprobe -l | grep ipvs
+2、解压安装ipvsadm软件：
+	cd /usr/src/
+	tar zxvf ipvsadm.tar.gz
+	cd ipvsadm-1.24
+	ln -sv /usr/src/kernels/2.6.32-504.el6.x86_64 /usr/src/linux #添加内核的链接
+	make && make install
+	
+LVS负载均衡技术：
+1、在调度器上设置RS：
+	service iptables stop
+	ipvsadm -A -t 192.168.138.100:80 -s rr -p 3600
+	ipvsadm -a -t 192.168.138.100:80 -r 192.168.139.129 -g -w 1 
+	ipvsadm -a -t 192.168.138.100:80 -r 192.168.139.130 -g -w 2 
+2、在RS上添加VIP地址：
+	echo 2 > /proc/sys/net/ipv4/conf/eth0/arp_announce
+	echo 2 > /proc/sys/net/ipv4/conf/all/arp_announce
+	echo 1 > /proc/sys/net/ipv4/conf/all/arp_ignore
+	echo 1 > /proc/sys/net/ipv4/conf/eth0/arp_ignore
+	ifconfig lo:0 192.168.138.100 broadcast 192.168.138.100 netmask 255.255.255.255 up
+	route add -host 192.168.138.100 dev lo:0
+	

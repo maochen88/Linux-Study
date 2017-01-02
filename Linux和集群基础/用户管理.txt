@@ -1,0 +1,68 @@
+1、用useradd添加用户
+Useradd student1——创建用户st1
+Useradd –e 12/31/2004 student2——创建student2,指定2004-12-31到期
+用户的缺省工作目录是/home/username，可以指定其他目录为其工作目录，例：useradd 
+
+student3 –d /student/student3
+用户的缺省UID从500后顺序增加，可以指定UID。例：useradd –u 600 student4
+如果不指定用户所属的工作组，在创建用户的时候会生成一个与用户名同名的工作组，也可以在
+
+创建用户的时候就指定其工作组。例：useradd –g student student 5
+
+2、用passwd为用户设置密码
+例：passwd  student1
+注意：没有设置密码的用户不能使用。
+
+3、usermod修改用户账户
+例：将用户student1的登录名改为st1，
+usermod –l st1 student1
+例：将用户加入到student组中，
+Usermod –g student  student1
+例：用户目录改为/student/student1
+usermod –d  /student/student1  student
+
+4、用userdel删除用户账户
+例：删除用户student2
+userdel student2
+例：删除用户student3，同时删除他的工作目录
+Userdel –r studenet3
+
+5、查看用户信息 
+id命令查看一个用户的UID和GID,例：查看student4的id
+Id student4
+finger命令 ——可以查看用户的主目录、启动shell、用户名、地址、电话等信息 。
+例：finger student4
+
+6、groupadd新增组
+groupadd –g 888 student
+创建一个组student，其GID为888
+
+7、gpasswd为组添加用户 
+只有root和组管理员能够改变组的成员： 
+例：把student1加入stdeunt组
+Gpasswd –a student1 student
+例：把student1退出student组
+Gpasswd –d student1 student
+例：把student的管理员指派给yz
+Gpasswd –A yz student
+
+8、groupmod修改组
+groupmod –n student students       修改student组名为students
+
+9、groupdel删除组
+groupdel students    删除组students
+
+10、用ifconfig配置网卡 
+ifconfig eth0 192.168.0.1 
+ifconfig eth0 down  
+ifconfig eth0 up 
+ifconfig eth0 netmask 255.255.255.0
+ifconfig eth0 192.168.0.1 netmask 255.255.255.0
+ifconfig eth0 -broadcast 192.168.0.255
+ifconfig eth0 
+ifconfig 
+
+11、用 route命令是查看和设置路由
+route add 0.0.0.0 gw 172.16.19.254—— 增加一个默认默认网关
+route del 0.0.0.0 gw 172.16.19.254——删除一个默认网关 
+  route——显示出当前路由表
